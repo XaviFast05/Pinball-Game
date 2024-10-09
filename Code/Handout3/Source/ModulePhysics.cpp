@@ -268,7 +268,7 @@ bool PhysBody::Contains(int x, int y) const
 	{
 		if (f->GetShape()->TestPoint(body->GetTransform(), p))
 		{
-
+			return true;
 		}
 	}
 
@@ -279,6 +279,30 @@ int PhysBody::RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& no
 {
 	// TODO 2: Write code to test a ray cast between both points provided. If not hit return -1
 	// if hit, fill normal_x and normal_y and return the distance between x1,y1 and it's colliding point
+
+	b2RayCastOutput output;
+	b2RayCastInput input;
+	input.p1.Set(PIXEL_TO_METERS(x1), PIXEL_TO_METERS(y1));
+	input.p2.Set(PIXEL_TO_METERS(x2), PIXEL_TO_METERS(y2));
+	input.maxFraction = 1.f;
+
+	b2Fixture* fixture = body->GetFixtureList();
+	while (fixture != nullptr) 
+	{
+		if (fixture->GetShape()->RayCast(&output, input, body->GetTransform(), 0))
+		{
+
+			normal_x = output.normal.x;
+			normal_y = output.normal.y;
+
+			float fx = (x2 - x1);
+			float fy = (y2 - y1);
+			float dist = sqrt((fx * fx) + fy +)
+
+		}
+
+			fixture = fixture->GetNext();
+	}
 
 	int ret = -1;
 
