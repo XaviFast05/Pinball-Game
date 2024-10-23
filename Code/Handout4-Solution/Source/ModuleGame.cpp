@@ -9,10 +9,11 @@ class PhysicEntity
 {
 protected:
 
-	PhysicEntity(PhysBody* _body)
+	PhysicEntity(PhysBody* _body, Module* _listener)
 		: body(_body)
+		, listener(_listener)
 	{
-
+		body->listener = listener;
 	}
 
 public:
@@ -26,13 +27,14 @@ public:
 
 protected:
 	PhysBody* body;
+	Module* listener;
 };
 
 class Circle : public PhysicEntity
 {
 public:
-	Circle(ModulePhysics* physics, int _x, int _y, Texture2D _texture)
-		: PhysicEntity(physics->CreateCircle(_x, _y, 25))
+	Circle(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture)
+		: PhysicEntity(physics->CreateCircle(_x, _y, 25), _listener)
 		, texture(_texture)
 	{
 
@@ -46,7 +48,7 @@ public:
 		float scale = 1.0f;
 		Rectangle source = { 0.0f, 0.0f, (float)texture.width, (float)texture.height };
 		Rectangle dest = { position.x, position.y, (float)texture.width * scale, (float)texture.height * scale };
-		Vector2 origin = { (float)texture.width / 2.0f, (float)texture.height / 2.0f };
+		Vector2 origin = { (float)texture.width / 2.0f, (float)texture.height / 2.0f};
 		float rotation = body->GetRotation() * RAD2DEG;
 		DrawTexturePro(texture, source, dest, origin, rotation, WHITE);
 	}
@@ -59,8 +61,8 @@ private:
 class Box : public PhysicEntity
 {
 public:
-	Box(ModulePhysics* physics, int _x, int _y, Texture2D _texture)
-		: PhysicEntity(physics->CreateRectangle(_x, _y, 100, 50))
+	Box(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture)
+		: PhysicEntity(physics->CreateRectangle(_x, _y, 100, 50), _listener)
 		, texture(_texture)
 	{
 
@@ -72,7 +74,7 @@ public:
 		body->GetPhysicPosition(x, y);
 		DrawTexturePro(texture, Rectangle{ 0, 0, (float)texture.width, (float)texture.height },
 			Rectangle{ (float)x, (float)y, (float)texture.width, (float)texture.height },
-			Vector2{ (float)texture.width / 2.0f, (float)texture.height / 2.0f }, body->GetRotation() * RAD2DEG, WHITE);
+			Vector2{ (float)texture.width / 2.0f, (float)texture.height / 2.0f}, body->GetRotation() * RAD2DEG, WHITE);
 	}
 
 	int RayHit(vec2<int> ray, vec2<int> mouse, vec2<float>& normal) override
@@ -124,8 +126,8 @@ public:
 			30, 62
 	};
 
-	Rick(ModulePhysics* physics, int _x, int _y, Texture2D _texture)
-		: PhysicEntity(physics->CreateChain(GetMouseX() - 50, GetMouseY() - 100, rick_head, 64))
+	Rick(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture)
+		: PhysicEntity(physics->CreateChain(GetMouseX() - 50, GetMouseY() - 100, rick_head, 64), _listener)
 		, texture(_texture)
 	{
 
@@ -141,6 +143,8 @@ public:
 private:
 	Texture2D texture;
 };
+
+
 
 ModuleGame::ModuleGame(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -165,7 +169,7 @@ bool ModuleGame::Start()
 	
 	bonus_fx = App->audio->LoadFx("Assets/bonus.wav");
 
-	// TODO: Homework - create a sensor
+	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
 	return ret;
 }
@@ -188,56 +192,20 @@ update_status ModuleGame::Update()
 		ray.y = GetMouseY();
 	}
 
-	if (IsKeyPressed(KEY_ONE))
+	if(IsKeyPressed(KEY_ONE))
 	{
-		// TODO 8: Make sure to add yourself as collision callback to the circle you creates
-		entities.emplace_back(new Circle(App->physics, GetMouseX(), GetMouseY(), circle));
+		entities.emplace_back(new Circle(App->physics, GetMouseX(), GetMouseY(), this, circle));
+		
 	}
 
-	if (IsKeyPressed(KEY_TWO))
+	if(IsKeyPressed(KEY_TWO))
 	{
-		entities.emplace_back(new Box(App->physics, GetMouseX(), GetMouseY(), box));
+		entities.emplace_back(new Box(App->physics, GetMouseX(), GetMouseY(), this, box));
 	}
 
-	if (IsKeyPressed(KEY_THREE))
+	if(IsKeyPressed(KEY_THREE))
 	{
-		// Pivot 0, 0
-		int rick_head[64] = {
-			14, 36,
-			42, 40,
-			40, 0,
-			75, 30,
-			88, 4,
-			94, 39,
-			111, 36,
-			104, 58,
-			107, 62,
-			117, 67,
-			109, 73,
-			110, 85,
-			106, 91,
-			109, 99,
-			103, 104,
-			100, 115,
-			106, 121,
-			103, 125,
-			98, 126,
-			95, 137,
-			83, 147,
-			67, 147,
-			53, 140,
-			46, 132,
-			34, 136,
-			38, 126,
-			23, 123,
-			30, 114,
-			10, 102,
-			29, 90,
-			0, 75,
-			30, 62
-		};
-
-		entities.emplace_back(new Rick(App->physics, GetMouseX(), GetMouseY(), rick));
+		entities.emplace_back(new Rick(App->physics, GetMouseX(), GetMouseY(), this, rick));
 	}
 
 	// Prepare for raycast ------------------------------------------------------
@@ -251,6 +219,7 @@ update_status ModuleGame::Update()
 
 	// All draw functions ------------------------------------------------------
 
+
 	for (PhysicEntity* entity : entities)
 	{
 		entity->Update();
@@ -263,6 +232,7 @@ update_status ModuleGame::Update()
 			}
 		}
 	}
+	
 
 	// ray -----------------
 	if(ray_on == true)
@@ -282,4 +252,7 @@ update_status ModuleGame::Update()
 	return UPDATE_CONTINUE;
 }
 
-// TODO 8: Now just define collision callback for the circle and play bonus_fx audio
+void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
+{
+	App->audio->PlayFx(bonus_fx);
+}

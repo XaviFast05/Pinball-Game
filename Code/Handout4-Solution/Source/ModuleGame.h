@@ -21,6 +21,7 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
 public:
 

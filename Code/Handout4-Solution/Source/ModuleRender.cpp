@@ -80,9 +80,7 @@ bool ModuleRender::Draw(Texture2D texture, int x, int y, const Rectangle* sectio
 	rect.width *= scale;
 	rect.height *= scale;
 
-    DrawTexturePro(texture, Rectangle{ 0, 0, (float)texture.width, (float)texture.height },
-        Rectangle{ (float)x, (float)y, (float)texture.width, (float)texture.height },
-        Vector2{ (float)texture.width / 2.0f, (float)texture.height / 2.0f }, angle, WHITE);
+    DrawTextureRec(texture, rect, position, WHITE);
 
 	return ret;
 }
