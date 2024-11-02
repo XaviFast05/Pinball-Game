@@ -30,10 +30,13 @@ public:
 	PhysBody* sensor;
 	bool sensed;
 
+
 	Texture2D circle;
 	Texture2D box;
 	Texture2D rick;
 	Texture2D background;
+	Texture2D wallTexture;
+	Texture2D wallTexture2;
 
 	uint32 bonus_fx;
 

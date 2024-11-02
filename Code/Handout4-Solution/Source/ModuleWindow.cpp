@@ -22,6 +22,7 @@ bool ModuleWindow::Init()
 	bool borderless = WIN_BORDERLESS;
 	bool resizable = WIN_RESIZABLE;
 	bool vsync = VSYNC;
+	float screenSize = SCREEN_SIZE;
 
 	width = SCREEN_WIDTH;
 	height = SCREEN_HEIGHT;
@@ -37,7 +38,7 @@ bool ModuleWindow::Init()
     LOG("Init raylib window");
 
     SetConfigFlags(flags);
-	InitWindow(width, height, TITLE);
+	InitWindow(width * screenSize, height * screenSize, TITLE);
 
 	return ret;
 }
