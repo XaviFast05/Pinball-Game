@@ -91,8 +91,48 @@ class Wall : public PhysicEntity
 {
 public:
 	// Pivot 0, 0
-	static constexpr int wall_points[104] = {
-			104 * SCREEN_SIZE, 277 * SCREEN_SIZE,
+	static constexpr int wall_points[16] = {
+
+			20*SCREEN_SIZE, 207*SCREEN_SIZE,
+			24*SCREEN_SIZE, 207*SCREEN_SIZE,
+			24*SCREEN_SIZE, 230*SCREEN_SIZE,
+			27*SCREEN_SIZE, 233*SCREEN_SIZE,
+			56*SCREEN_SIZE, 253*SCREEN_SIZE,
+			53*SCREEN_SIZE, 260*SCREEN_SIZE,
+			23*SCREEN_SIZE, 240*SCREEN_SIZE,
+			20* SCREEN_SIZE, 236*SCREEN_SIZE,
+
+
+
+	};
+
+	Wall(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture)
+		: PhysicEntity(physics->CreateChain(0, 0, wall_points , 16), _listener)
+		, texture(_texture)
+	{
+
+	}
+
+	void Update() override
+	{
+		int x, y;
+		body->GetPhysicPosition(x, y);
+		DrawTextureEx(texture, Vector2{ (float)x, (float)y }, body->GetRotation() * RAD2DEG, 1.0f, WHITE);
+	}
+
+private:
+	Texture2D texture;
+};
+
+
+
+
+class Wall2 : public PhysicEntity
+{
+public:
+	// Pivot 0, 0
+	static constexpr int wall_points2[104] = {
+					104 * SCREEN_SIZE, 277 * SCREEN_SIZE,
 			137 * SCREEN_SIZE, 256 * SCREEN_SIZE,
 			152 * SCREEN_SIZE, 246 * SCREEN_SIZE,
 			152 * SCREEN_SIZE, 206 * SCREEN_SIZE,
@@ -144,14 +184,10 @@ public:
 			8 * SCREEN_SIZE, 246 * SCREEN_SIZE,
 			22 * SCREEN_SIZE, 254 * SCREEN_SIZE,
 			56 * SCREEN_SIZE, 277 * SCREEN_SIZE
-	
-
-
-
 	};
 
-	Wall(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture)
-		: PhysicEntity(physics->CreateChain(0, 0, wall_points , 104), _listener)
+	Wall2(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture)
+		: PhysicEntity(physics->CreateChain(0, 0, wall_points2, 104), _listener)
 		, texture(_texture)
 	{
 
@@ -168,7 +204,161 @@ private:
 	Texture2D texture;
 };
 
+class Wall3 : public PhysicEntity
+{
+public:
+	// Pivot 0, 0
+	static constexpr int wall_points3[16] = {
+			104 * SCREEN_SIZE, 253 * SCREEN_SIZE,
+			133 * SCREEN_SIZE, 233 * SCREEN_SIZE,
+			136 * SCREEN_SIZE, 228 * SCREEN_SIZE,
+			136 * SCREEN_SIZE, 206 * SCREEN_SIZE,
+			140 * SCREEN_SIZE, 206 * SCREEN_SIZE,
+			140 * SCREEN_SIZE, 236 * SCREEN_SIZE,
+			136 * SCREEN_SIZE, 240 * SCREEN_SIZE,
+			107 * SCREEN_SIZE, 259 * SCREEN_SIZE,
+	};
 
+	Wall3(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture)
+		: PhysicEntity(physics->CreateChain(0, 0, wall_points3, 16), _listener)
+		, texture(_texture)
+	{
+
+	}
+
+	void Update() override
+	{
+		int x, y;
+		body->GetPhysicPosition(x, y);
+		DrawTextureEx(texture, Vector2{ (float)x, (float)y }, body->GetRotation() * RAD2DEG, 1.0f, WHITE);
+	}
+
+private:
+	Texture2D texture;
+};
+
+class Wall4 : public PhysicEntity
+{
+public:
+	// Pivot 0, 0
+	static constexpr int wall_points4[42] = {
+			110 * SCREEN_SIZE, 49 * SCREEN_SIZE,
+			117 * SCREEN_SIZE, 53 * SCREEN_SIZE,
+			127 * SCREEN_SIZE, 62 * SCREEN_SIZE,
+			132 * SCREEN_SIZE, 71 * SCREEN_SIZE,
+			135 * SCREEN_SIZE, 82 * SCREEN_SIZE,
+			135 * SCREEN_SIZE, 112 * SCREEN_SIZE,
+			134 * SCREEN_SIZE, 122 * SCREEN_SIZE,
+			128 * SCREEN_SIZE, 140 * SCREEN_SIZE,
+			121 * SCREEN_SIZE, 150 * SCREEN_SIZE,
+			115 * SCREEN_SIZE, 145 * SCREEN_SIZE,
+			122 * SCREEN_SIZE, 135 * SCREEN_SIZE,
+			127 * SCREEN_SIZE, 122 * SCREEN_SIZE,
+			131 * SCREEN_SIZE, 106 * SCREEN_SIZE,
+			131 * SCREEN_SIZE, 87 * SCREEN_SIZE,
+			116 * SCREEN_SIZE, 87 * SCREEN_SIZE,
+			116 * SCREEN_SIZE, 103 * SCREEN_SIZE,
+			114 * SCREEN_SIZE, 110 * SCREEN_SIZE,
+			109 * SCREEN_SIZE, 120 * SCREEN_SIZE,
+			104 * SCREEN_SIZE, 117 * SCREEN_SIZE,
+			108 * SCREEN_SIZE, 99 * SCREEN_SIZE,
+			110 * SCREEN_SIZE, 84 * SCREEN_SIZE,
+	};
+
+	Wall4(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture)
+		: PhysicEntity(physics->CreateChain(0, 0, wall_points4, 42), _listener)
+		, texture(_texture)
+	{
+
+	}
+
+	void Update() override
+	{
+		int x, y;
+		body->GetPhysicPosition(x, y);
+		DrawTextureEx(texture, Vector2{ (float)x, (float)y }, body->GetRotation() * RAD2DEG, 1.0f, WHITE);
+	}
+
+private:
+	Texture2D texture;
+};
+
+class Wall5 : public PhysicEntity
+{
+public:
+	// Pivot 0, 0
+	static constexpr int wall_points5[26] = {
+			50 * SCREEN_SIZE, 75 * SCREEN_SIZE,
+			47 * SCREEN_SIZE, 80 * SCREEN_SIZE,
+			47 * SCREEN_SIZE, 88 * SCREEN_SIZE,
+			49 * SCREEN_SIZE, 96 * SCREEN_SIZE,
+			54 * SCREEN_SIZE, 103 * SCREEN_SIZE,
+			65 * SCREEN_SIZE, 115 * SCREEN_SIZE,
+			53 * SCREEN_SIZE, 127 * SCREEN_SIZE,
+			49 * SCREEN_SIZE, 123 * SCREEN_SIZE,
+			46 * SCREEN_SIZE, 117 * SCREEN_SIZE,
+			43 * SCREEN_SIZE, 106 * SCREEN_SIZE,
+			43 * SCREEN_SIZE, 83 * SCREEN_SIZE,
+			45 * SCREEN_SIZE, 74 * SCREEN_SIZE,
+			50 * SCREEN_SIZE, 66 * SCREEN_SIZE,
+	};
+
+	Wall5(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture)
+		: PhysicEntity(physics->CreateChain(0, 0, wall_points5, 26), _listener)
+		, texture(_texture)
+	{
+
+	}
+
+	void Update() override
+	{
+		int x, y;
+		body->GetPhysicPosition(x, y);
+		DrawTextureEx(texture, Vector2{ (float)x, (float)y }, body->GetRotation() * RAD2DEG, 1.0f, WHITE);
+	}
+
+private:
+	Texture2D texture;
+};
+
+class Wall6 : public PhysicEntity
+{
+public:
+	// Pivot 0, 0
+	static constexpr int wall_points6[28] = {
+40 * SCREEN_SIZE, 150 * SCREEN_SIZE,
+36 * SCREEN_SIZE, 146 * SCREEN_SIZE,
+31 * SCREEN_SIZE, 135 * SCREEN_SIZE,
+27 * SCREEN_SIZE, 125 * SCREEN_SIZE,
+24 * SCREEN_SIZE, 113 * SCREEN_SIZE,
+24 * SCREEN_SIZE, 95 * SCREEN_SIZE,
+27 * SCREEN_SIZE, 89 * SCREEN_SIZE,
+29 * SCREEN_SIZE, 85 * SCREEN_SIZE,
+31 * SCREEN_SIZE, 88 * SCREEN_SIZE,
+29 * SCREEN_SIZE, 96 * SCREEN_SIZE,
+29 * SCREEN_SIZE, 106 * SCREEN_SIZE,
+32 * SCREEN_SIZE, 120 * SCREEN_SIZE,
+36 * SCREEN_SIZE, 133 * SCREEN_SIZE,
+45 * SCREEN_SIZE, 145 * SCREEN_SIZE,
+	};
+
+	Wall6(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture)
+		: PhysicEntity(physics->CreateChain(0, 0, wall_points6, 28), _listener)
+		, texture(_texture)
+	{
+
+	}
+
+	void Update() override
+	{
+		int x, y;
+		body->GetPhysicPosition(x, y);
+		DrawTextureEx(texture, Vector2{ (float)x, (float)y }, body->GetRotation() * RAD2DEG, 1.0f, WHITE);
+	}
+
+private:
+	Texture2D texture;
+};
 
 ModuleGame::ModuleGame(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -191,13 +381,18 @@ bool ModuleGame::Start()
 	box = LoadTexture("Assets/crate.png");
 	rick = LoadTexture("Assets/rick_head.png");
 	background = LoadTexture("Assets/Fondo.png");
-	wallTexture = LoadTexture("Assets/wall_texture.png");
+
 	
 	bonus_fx = App->audio->LoadFx("Assets/bonus.wav");
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
-	entities.emplace_back(new Wall(App->physics, SCREEN_SIZE, SCREEN_SIZE, this, wallTexture));
+	entities.emplace_back(new Wall(App->physics, 0, 0, this, wallTexture));
+	entities.emplace_back(new Wall2(App->physics, 0, 0, this, wallTexture2));
+	entities.emplace_back(new Wall3(App->physics, 0, 0, this, wallTexture3));
+	entities.emplace_back(new Wall4(App->physics, 0, 0, this, wallTexture4));
+	entities.emplace_back(new Wall5(App->physics, 0, 0, this, wallTexture5));
+	entities.emplace_back(new Wall6(App->physics, 0, 0, this, wallTexture6));
 
 	return ret;
 }
