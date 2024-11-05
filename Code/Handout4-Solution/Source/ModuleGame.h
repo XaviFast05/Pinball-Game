@@ -33,7 +33,7 @@ public:
 
 	Texture2D circle;
 	Texture2D box;
-	Texture2D rick;
+
 	Texture2D background;
 	Texture2D wallTexture;
 	Texture2D wallTexture2;
