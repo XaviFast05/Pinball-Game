@@ -62,7 +62,7 @@ class Box : public PhysicEntity
 {
 public:
 	Box(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture)
-		: PhysicEntity(physics->CreateRectangle(_x, _y, 100, 50), _listener)
+		: PhysicEntity(physics->CreateRectangle(_x, _y, 90, 38), _listener)
 		, texture(_texture)
 	{
 
@@ -72,9 +72,10 @@ public:
 	{
 		int x, y;
 		body->GetPhysicPosition(x, y);
+		float scale = 3;
 		DrawTexturePro(texture, Rectangle{ 0, 0, (float)texture.width, (float)texture.height },
-			Rectangle{ (float)x, (float)y, (float)texture.width, (float)texture.height },
-			Vector2{ (float)texture.width / 2.0f, (float)texture.height / 2.0f}, body->GetRotation() * RAD2DEG, WHITE);
+			Rectangle{ (float)x, (float)y, (float)texture.width * scale, (float)texture.height * scale },
+			Vector2{ (float)texture.width / 0.7f, (float)texture.height / 0.7f}, body->GetRotation() * RAD2DEG, WHITE);
 	}
 
 	int RayHit(vec2<int> ray, vec2<int> mouse, vec2<float>& normal) override
@@ -482,13 +483,13 @@ bool ModuleGame::Start()
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	circle = LoadTexture("Assets/wheel.png"); 
-	box = LoadTexture("Assets/crate.png");
+	box = LoadTexture("Assets/Diglet.png");
 	background = LoadTexture("Assets/Fondo.png");
 
 	
 	bonus_fx = App->audio->LoadFx("Assets/bonus.wav");
 
-	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
+	sensor = App->physics->CreateRectangleSensor((SCREEN_WIDTH / 2) * SCREEN_SIZE, (SCREEN_HEIGHT * SCREEN_SIZE) + 20, (SCREEN_WIDTH * SCREEN_SIZE) - 200, 50);
 
 	entities.emplace_back(new Wall(App->physics, 0, 0, this, wallTexture));
 	entities.emplace_back(new Wall2(App->physics, 0, 0, this, wallTexture2));
