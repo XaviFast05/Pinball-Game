@@ -61,11 +61,17 @@ update_status ModulePhysics::PreUpdate()
 		{
 			b2BodyUserData data1 = c->GetFixtureA()->GetBody()->GetUserData();
 			b2BodyUserData data2 = c->GetFixtureA()->GetBody()->GetUserData();
+			b2BodyUserData data3 = c->GetFixtureA()->GetBody()->GetUserData();
 
 			PhysBody* pb1 = (PhysBody*)data1.pointer;
 			PhysBody* pb2 = (PhysBody*)data2.pointer;
-			if(pb1 && pb2 && pb1->listener)
+			PhysBody* pb3 = (PhysBody*)data3.pointer;
+
+			if(pb1 && pb2 && pb3 && pb1->listener)
 				pb1->listener->OnCollision(pb1, pb2);
+				//pb1->listener->OnSensor(pb1, pb3);
+				
+
 		}
 	}
 
@@ -401,13 +407,18 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 {
 	b2BodyUserData dataA = contact->GetFixtureA()->GetBody()->GetUserData();
 	b2BodyUserData dataB = contact->GetFixtureB()->GetBody()->GetUserData();
+	b2BodyUserData dataC = contact->GetFixtureB()->GetBody()->GetUserData();
 
 	PhysBody* physA = (PhysBody*)dataA.pointer;
 	PhysBody* physB = (PhysBody*)dataB.pointer;
+	PhysBody* physC = (PhysBody*)dataC.pointer;
 
 	if(physA && physA->listener != NULL)
 		physA->listener->OnCollision(physA, physB);
 
 	if(physB && physB->listener != NULL)
 		physB->listener->OnCollision(physB, physA);
+
+	if (physC && physC->listener != NULL)
+		physC->listener->OnSensor(physC, physA);
 }
