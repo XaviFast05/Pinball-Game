@@ -2,6 +2,14 @@
 #include "Module.h"
 #include "Globals.h"
 #include "p2Point.h"
+#include "ModuleRender.h"
+#include "ModuleGame.h"
+#include "ModuleAudio.h"
+#include "ModulePhysics.h"
+
+class PhysBody;
+class PhysicEntity;
+class Player;
 
 class ModulePlayer : public Module
 {
@@ -13,6 +21,6 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-public:
-
+	Texture2D playerImg;
+	Player* player = nullptr;
 };

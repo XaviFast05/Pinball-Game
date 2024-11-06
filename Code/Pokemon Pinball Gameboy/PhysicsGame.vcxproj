@@ -180,6 +180,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="PhysicEntity.h" />
     <ClInclude Include="Source/Application.h" />
     <ClInclude Include="Source/Globals.h" />
     <ClInclude Include="Source/ModulePhysics.h" />
@@ -189,7 +190,7 @@
     <ClInclude Include="Source/ModuleWindow.h" />
     <ClInclude Include="Source/p2Point.h" />
     <ClInclude Include="Source\ModuleGame.h" />
-    <ClInclude Include="Source\Player.h" />
+    <ClInclude Include="Source\ModulePlayer.h" />
     <ClInclude Include="Source\Timer.h" />
   </ItemGroup>
   <ItemGroup>

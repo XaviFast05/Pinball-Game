@@ -63,7 +63,10 @@
     <ClInclude Include="Source\ModuleGame.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Player.h">
+    <ClInclude Include="Source\ModulePlayer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicEntity.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,31 +4,7 @@
 #include "ModuleGame.h"
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
-
-class PhysicEntity
-{
-protected:
-
-	PhysicEntity(PhysBody* _body, Module* _listener)
-		: body(_body)
-		, listener(_listener)
-	{
-		body->listener = listener;
-	}
-
-public:
-	virtual ~PhysicEntity() = default;
-	virtual void Update() = 0;
-
-	virtual int RayHit(vec2<int> ray, vec2<int> mouse, vec2<float>& normal)
-	{
-		return 0;
-	}
-
-protected:
-	PhysBody* body;
-	Module* listener;
-};
+#include "PhysicE.h"
 
 class Circle : public PhysicEntity
 {
@@ -87,6 +63,7 @@ private:
 	Texture2D texture;
 
 };
+
 
 class Wall : public PhysicEntity
 {
@@ -485,7 +462,6 @@ bool ModuleGame::Start()
 	circle = LoadTexture("Assets/wheel.png"); 
 	box = LoadTexture("Assets/Diglet.png");
 	background = LoadTexture("Assets/Fondo.png");
-
 	
 	bonus_fx = App->audio->LoadFx("Assets/bonus.wav");
 
@@ -500,7 +476,6 @@ bool ModuleGame::Start()
 	entities.emplace_back(new Wall7(App->physics, 0, 0, this, wallTexture7));
 	entities.emplace_back(new Wall8(App->physics, 0, 0, this, wallTexture8));
 	entities.emplace_back(new Wall9(App->physics, 0, 0, this, wallTexture9));
-
 	return ret;
 }
 
@@ -519,9 +494,6 @@ update_status ModuleGame::Update()
 	float scaleY = (float)GetScreenHeight() / background.height;
 	DrawTextureEx(background, { 0, 0 }, 0.0f, fmax(scaleX, scaleY), WHITE);
 
-
-
-
 	if(IsKeyPressed(KEY_SPACE))
 	{
 		ray_on = !ray_on;
@@ -532,7 +504,6 @@ update_status ModuleGame::Update()
 	if(IsKeyPressed(KEY_ONE))
 	{
 		entities.emplace_back(new Circle(App->physics, GetMouseX(), GetMouseY(), this, circle));
-		
 	}
 
 	if(IsKeyPressed(KEY_TWO))
