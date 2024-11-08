@@ -4,7 +4,7 @@
 #include "ModuleGame.h"
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
-#include "PhysicE.h"
+#include "PhysicEntity.h"
 
 class Circle : public PhysicEntity
 {

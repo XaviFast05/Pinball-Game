@@ -5,7 +5,7 @@ class PhysicEntity
 {
 protected:
 
-	/*PhysicEntity(PhysBody* _body, Module* _listener)
+	PhysicEntity(PhysBody* _body, Module* _listener)
 		: body(_body)
 		, listener(_listener)
 	{
@@ -22,5 +22,5 @@ public:
 	}
 
 	PhysBody* body;
-	Module* listener;*/
+	Module* listener;
 };
