@@ -28,11 +28,14 @@ public:
 	std::vector<PhysicEntity*> entities;
 	
 	PhysBody* sensor;
+	
 	bool sensed;
+	bool isStopped = false;
 
 
 	Texture2D circle;
 	Texture2D box;
+	Texture2D voltorb;
 
 	Texture2D background;
 	Texture2D wallTexture;

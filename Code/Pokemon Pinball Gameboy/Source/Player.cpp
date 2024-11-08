@@ -20,11 +20,21 @@ public:
 
 	virtual ~PlayerSpring() = default;
 
-	void Update(){}
+	void Update() override
+	{
+		int x, y;
+		body->GetPhysicPosition(x, y);
+		float scale = 3;
+		DrawTexturePro(texture, Rectangle{ 0, 0, (float)texture.width, (float)texture.height },
+			Rectangle{ (float)x, (float)y, (float)texture.width * scale, (float)texture.height * scale },
+			Vector2{ (float)texture.width / 0.7f, (float)texture.height / 0.7f }, body->GetRotation() * RAD2DEG, WHITE);
+	}
 
 	void UpdatePlayer(float x, float y)
 	{
 		this->body->body->SetTransform(b2Vec2{ x, y }, 0);
+		float scale = 3;
+		
 	}
 
 	virtual int RayHit(vec2<int> ray, vec2<int> mouse, vec2<float>& normal)
@@ -42,7 +52,8 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	playerImg = LoadTexture("Assets/Diglet.png");
-	player = new PlayerSpring(App->physics, (float)500.0, (float)800.0, this, playerImg);
+	player = new PlayerSpring(App->physics, 500, 800, this, playerImg);
+
 
 	LOG("Loading player");
 	return true;
@@ -82,6 +93,8 @@ update_status ModulePlayer::Update()
 	{
 		canShoot = true;
 	}
+
+	player->Update();
 
 	return UPDATE_CONTINUE;
 }

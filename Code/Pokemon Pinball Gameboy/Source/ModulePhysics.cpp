@@ -94,7 +94,7 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
 	fixture.density = 1.0f;
-	fixture.restitution = 0.7f;
+	fixture.restitution = 0.5f;
 
 	b->CreateFixture(&fixture);
 
@@ -346,6 +346,12 @@ void PhysBody::GetPhysicPosition(int& x, int& y) const
 	b2Vec2 pos = body->GetPosition();
 	x = METERS_TO_PIXELS(pos.x);
 	y = METERS_TO_PIXELS(pos.y);
+}
+
+void PhysBody::SetPhysicPosition(int& x, int& y) const
+{
+	b2Vec2 pos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	body->SetTransform(pos, body->GetAngle());
 }
 
 float PhysBody::GetRotation() const

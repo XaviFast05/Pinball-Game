@@ -34,6 +34,35 @@ private:
 
 };
 
+class Voltorb : public PhysicEntity
+{
+public:
+	Voltorb(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture)
+		: PhysicEntity(physics->CreateCircle(_x, _y, 15), _listener)
+		, texture(_texture)
+	{
+
+	}
+
+	void Update() override
+	{
+		int x, y;
+		body->GetPhysicPosition(x, y);
+		Vector2 position{ (float)x, (float)y };
+		float scale = 3.0f;
+		Rectangle source = { 0.0f, 0.0f, (float)texture.width, (float)texture.height };
+		Rectangle dest = { position.x , position.y , (float)texture.width * scale, (float)texture.height * scale };
+		Vector2 origin = { (float)texture.width * 1.5f , (float)texture.height * 1.5f };
+		float rotation = 0;
+		DrawTexturePro(texture, source, dest, origin, rotation, WHITE);
+	}
+
+private:
+	Texture2D texture;
+
+};
+
+
 class Box : public PhysicEntity
 {
 public:
@@ -110,65 +139,65 @@ class Wall2 : public PhysicEntity
 public:
 	// Pivot 0, 0
 	static constexpr int wall_points2[118] = {
-104 * SCREEN_SIZE, 286 * SCREEN_SIZE,
-104 * SCREEN_SIZE, 278 * SCREEN_SIZE,
-151 * SCREEN_SIZE, 246 * SCREEN_SIZE,
-152 * SCREEN_SIZE, 242 * SCREEN_SIZE,
-152 * SCREEN_SIZE, 206 * SCREEN_SIZE,
-150 * SCREEN_SIZE, 200 * SCREEN_SIZE,
-147 * SCREEN_SIZE, 196 * SCREEN_SIZE,
-137 * SCREEN_SIZE, 193 * SCREEN_SIZE,
-137 * SCREEN_SIZE, 175 * SCREEN_SIZE,
-134 * SCREEN_SIZE, 169 * SCREEN_SIZE,
-131 * SCREEN_SIZE, 166 * SCREEN_SIZE,
-139 * SCREEN_SIZE, 153 * SCREEN_SIZE,
-143 * SCREEN_SIZE, 140 * SCREEN_SIZE,
-147 * SCREEN_SIZE, 124 * SCREEN_SIZE,
-150 * SCREEN_SIZE, 101 * SCREEN_SIZE,
-150 * SCREEN_SIZE, 71 * SCREEN_SIZE,
-148 * SCREEN_SIZE, 63 * SCREEN_SIZE,
-144 * SCREEN_SIZE, 50 * SCREEN_SIZE,
-138 * SCREEN_SIZE, 40 * SCREEN_SIZE,
-147 * SCREEN_SIZE, 50 * SCREEN_SIZE,
-155 * SCREEN_SIZE, 63 * SCREEN_SIZE,
-157 * SCREEN_SIZE, 69 * SCREEN_SIZE,
-160 * SCREEN_SIZE, 83 * SCREEN_SIZE,
-160 * SCREEN_SIZE, 279 * SCREEN_SIZE,
-174 * SCREEN_SIZE, 279 * SCREEN_SIZE,
-174 * SCREEN_SIZE, 84 * SCREEN_SIZE,
-171 * SCREEN_SIZE, 69 * SCREEN_SIZE,
-169 * SCREEN_SIZE, 63 * SCREEN_SIZE,
-162 * SCREEN_SIZE, 50 * SCREEN_SIZE,
-154 * SCREEN_SIZE, 39 * SCREEN_SIZE,
-145 * SCREEN_SIZE, 30 * SCREEN_SIZE,
-136 * SCREEN_SIZE, 23 * SCREEN_SIZE,
-123 * SCREEN_SIZE, 16 * SCREEN_SIZE,
-112 * SCREEN_SIZE, 12 * SCREEN_SIZE,
-100 * SCREEN_SIZE, 10 * SCREEN_SIZE,
-72 * SCREEN_SIZE, 10 * SCREEN_SIZE,
-51 * SCREEN_SIZE, 15 * SCREEN_SIZE,
-39 * SCREEN_SIZE, 22 * SCREEN_SIZE,
-29 * SCREEN_SIZE, 31 * SCREEN_SIZE,
-26 * SCREEN_SIZE, 31 * SCREEN_SIZE,
-26 * SCREEN_SIZE, 20 * SCREEN_SIZE,
-9 * SCREEN_SIZE, 20 * SCREEN_SIZE,
-9 * SCREEN_SIZE, 100 * SCREEN_SIZE,
-13 * SCREEN_SIZE, 124 * SCREEN_SIZE,
-16 * SCREEN_SIZE, 137 * SCREEN_SIZE,
-19 * SCREEN_SIZE, 148 * SCREEN_SIZE,
-23 * SCREEN_SIZE, 159 * SCREEN_SIZE,
-29 * SCREEN_SIZE, 166 * SCREEN_SIZE,
-25 * SCREEN_SIZE, 170 * SCREEN_SIZE,
-24 * SCREEN_SIZE, 175 * SCREEN_SIZE,
-24 * SCREEN_SIZE, 193 * SCREEN_SIZE,
-20 * SCREEN_SIZE, 194 * SCREEN_SIZE,
-15 * SCREEN_SIZE, 196 * SCREEN_SIZE,
-11 * SCREEN_SIZE, 199 * SCREEN_SIZE,
-7 * SCREEN_SIZE, 205 * SCREEN_SIZE,
-7 * SCREEN_SIZE, 244 * SCREEN_SIZE,
-10 * SCREEN_SIZE, 248 * SCREEN_SIZE,
-56 * SCREEN_SIZE, 278 * SCREEN_SIZE,
-56 * SCREEN_SIZE, 286 * SCREEN_SIZE,
+			104 * SCREEN_SIZE, 286 * SCREEN_SIZE,
+			104 * SCREEN_SIZE, 278 * SCREEN_SIZE,
+			151 * SCREEN_SIZE, 246 * SCREEN_SIZE,
+			152 * SCREEN_SIZE, 242 * SCREEN_SIZE,
+			152 * SCREEN_SIZE, 206 * SCREEN_SIZE,
+			150 * SCREEN_SIZE, 200 * SCREEN_SIZE,
+			147 * SCREEN_SIZE, 196 * SCREEN_SIZE,
+			137 * SCREEN_SIZE, 193 * SCREEN_SIZE,
+			137 * SCREEN_SIZE, 175 * SCREEN_SIZE,
+			134 * SCREEN_SIZE, 169 * SCREEN_SIZE,
+			131 * SCREEN_SIZE, 166 * SCREEN_SIZE,
+			139 * SCREEN_SIZE, 153 * SCREEN_SIZE,
+			143 * SCREEN_SIZE, 140 * SCREEN_SIZE,
+			147 * SCREEN_SIZE, 124 * SCREEN_SIZE,
+			150 * SCREEN_SIZE, 101 * SCREEN_SIZE,
+			150 * SCREEN_SIZE, 71 * SCREEN_SIZE,
+			148 * SCREEN_SIZE, 63 * SCREEN_SIZE,
+			144 * SCREEN_SIZE, 50 * SCREEN_SIZE,
+			138 * SCREEN_SIZE, 40 * SCREEN_SIZE,
+			147 * SCREEN_SIZE, 50 * SCREEN_SIZE,
+			155 * SCREEN_SIZE, 63 * SCREEN_SIZE,
+			157 * SCREEN_SIZE, 69 * SCREEN_SIZE,
+			160 * SCREEN_SIZE, 83 * SCREEN_SIZE,
+			160 * SCREEN_SIZE, 279 * SCREEN_SIZE,
+			174 * SCREEN_SIZE, 279 * SCREEN_SIZE,
+			174 * SCREEN_SIZE, 84 * SCREEN_SIZE,
+			171 * SCREEN_SIZE, 69 * SCREEN_SIZE,
+			169 * SCREEN_SIZE, 63 * SCREEN_SIZE,
+			162 * SCREEN_SIZE, 50 * SCREEN_SIZE,
+			154 * SCREEN_SIZE, 39 * SCREEN_SIZE,
+			145 * SCREEN_SIZE, 30 * SCREEN_SIZE,
+			136 * SCREEN_SIZE, 23 * SCREEN_SIZE,
+			123 * SCREEN_SIZE, 16 * SCREEN_SIZE,
+			112 * SCREEN_SIZE, 12 * SCREEN_SIZE,
+			100 * SCREEN_SIZE, 10 * SCREEN_SIZE,
+			72 * SCREEN_SIZE, 10 * SCREEN_SIZE,
+			51 * SCREEN_SIZE, 15 * SCREEN_SIZE,
+			39 * SCREEN_SIZE, 22 * SCREEN_SIZE,
+			29 * SCREEN_SIZE, 31 * SCREEN_SIZE,
+			26 * SCREEN_SIZE, 31 * SCREEN_SIZE,
+			26 * SCREEN_SIZE, 20 * SCREEN_SIZE,
+			9 * SCREEN_SIZE, 20 * SCREEN_SIZE,
+			9 * SCREEN_SIZE, 100 * SCREEN_SIZE,
+			13 * SCREEN_SIZE, 124 * SCREEN_SIZE,
+			16 * SCREEN_SIZE, 137 * SCREEN_SIZE,
+			19 * SCREEN_SIZE, 148 * SCREEN_SIZE,
+			23 * SCREEN_SIZE, 159 * SCREEN_SIZE,
+			29 * SCREEN_SIZE, 166 * SCREEN_SIZE,
+			25 * SCREEN_SIZE, 170 * SCREEN_SIZE,
+			24 * SCREEN_SIZE, 175 * SCREEN_SIZE,
+			24 * SCREEN_SIZE, 193 * SCREEN_SIZE,
+			20 * SCREEN_SIZE, 194 * SCREEN_SIZE,
+			15 * SCREEN_SIZE, 196 * SCREEN_SIZE,
+			11 * SCREEN_SIZE, 199 * SCREEN_SIZE,
+			7 * SCREEN_SIZE, 205 * SCREEN_SIZE,
+			7 * SCREEN_SIZE, 244 * SCREEN_SIZE,
+			10 * SCREEN_SIZE, 248 * SCREEN_SIZE,
+			56 * SCREEN_SIZE, 278 * SCREEN_SIZE,
+			56 * SCREEN_SIZE, 286 * SCREEN_SIZE,
 
 
 	};
@@ -471,11 +500,17 @@ bool ModuleGame::Start()
 	circle = LoadTexture("Assets/wheel.png"); 
 	box = LoadTexture("Assets/Diglet.png");
 	background = LoadTexture("Assets/Fondo.png");
+	voltorb = LoadTexture("Assets/Voltorb.png");
 	
 	bonus_fx = App->audio->LoadFx("Assets/bonus.wav");
+	entities.emplace_back(new Circle(App->physics, 500, 750, this, circle));
+	entities.emplace_back(new Voltorb(App->physics, 200, 200, this, voltorb));
+	
 
 	sensor = App->physics->CreateRectangleSensor((SCREEN_WIDTH / 2) * SCREEN_SIZE, (SCREEN_HEIGHT * SCREEN_SIZE) + 30, (SCREEN_WIDTH * SCREEN_SIZE) - 200, 50);
 
+
+	//Creacion de las colisiones
 	entities.emplace_back(new Wall(App->physics, 0, 0, this, wallTexture));
 	entities.emplace_back(new Wall2(App->physics, 0, 0, this, wallTexture2));
 	entities.emplace_back(new Wall3(App->physics, 0, 0, this, wallTexture3));
@@ -485,6 +520,12 @@ bool ModuleGame::Start()
 	entities.emplace_back(new Wall7(App->physics, 0, 0, this, wallTexture7));
 	entities.emplace_back(new Wall8(App->physics, 0, 0, this, wallTexture8));
 	entities.emplace_back(new Wall9(App->physics, 0, 0, this, wallTexture9));
+
+
+	// Creacion de voltorbs
+
+
+
 	return ret;
 }
 
@@ -496,12 +537,15 @@ bool ModuleGame::CleanUp()
 	return true;
 }
 
+
 // Update: draw background
 update_status ModuleGame::Update()
 {
 	float scaleX = (float)GetScreenWidth() / background.width;
 	float scaleY = (float)GetScreenHeight() / background.height;
 	DrawTextureEx(background, { 0, 0 }, 0.0f, fmax(scaleX, scaleY), WHITE);
+
+	Circle* Pokeball = dynamic_cast<Circle*>(entities[0]);
 
 	if(IsKeyPressed(KEY_SPACE))
 	{
@@ -510,19 +554,29 @@ update_status ModuleGame::Update()
 		ray.y = GetMouseY();
 	}
 
-	if(IsKeyPressed(KEY_ONE))
-	{
-		entities.emplace_back(new Circle(App->physics, GetMouseX(), GetMouseY(), this, circle));
-	}
-
 	if(IsKeyPressed(KEY_TWO))
 	{
 		entities.emplace_back(new Box(App->physics, GetMouseX(), GetMouseY(), this, box));
 	}
 
+	if (Pokeball != nullptr) {
+		int x, y;
+		Pokeball->body->GetPhysicPosition(x, y); // Obtiene la posición actual
 
+		if (IsKeyPressed(KEY_ONE))
+		{
+			x = GetMouseX();
+			y = GetMouseY();
+			Pokeball->body->SetPhysicPosition(x, y);
+		}
 
+		// Actualiza la posición en el cuerpo físico
+	}
 
+	if (IsKeyPressed(KEY_THREE))
+	{
+		entities.emplace_back(new Circle(App->physics, GetMouseX(), GetMouseY(), this, circle));
+	}
 
 	// Prepare for raycast ------------------------------------------------------
 	
