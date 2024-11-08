@@ -7,24 +7,24 @@
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled)
 {}
 
-class Player : public PhysicEntity
+class PlayerSpring : public PhysicEntity
 {
 public:
 
-	Player(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture)
-		: PhysicEntity(physics->CreateRectangle(_x, _y, 100, 50), _listener)
+	PlayerSpring(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture)
+		: PhysicEntity(physics->CreateRectangle(_x, _y, 37, 100), _listener)
 		, texture(_texture)
 	{
 
 	}
 
-	virtual ~Player() = default;
+	virtual ~PlayerSpring() = default;
 
-	void Update()
+	void Update(){}
+
+	void UpdatePlayer(float x, float y)
 	{
-		DrawTexturePro(texture, Rectangle{ 0, 0, (float)texture.width, (float)texture.height },
-			Rectangle{ (float)100.0, (float)posY, (float)texture.width, (float)texture.height },
-			Vector2{ (float)texture.width / 2.0f, (float)texture.height / 2.0f }, body->GetRotation() * RAD2DEG, WHITE);
+		this->body->body->SetTransform(b2Vec2{ x, y }, 0);
 	}
 
 	virtual int RayHit(vec2<int> ray, vec2<int> mouse, vec2<float>& normal)
@@ -33,7 +33,6 @@ public:
 	}
 
 	Texture2D texture;
-	float posY = 0.0;
 };
 
 ModulePlayer::~ModulePlayer()
@@ -42,8 +41,8 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::Start()
 {
-	playerImg = LoadTexture("Assets/crate.png");
-	player = new Player(App->physics, (float)100.0, (float)100.0, this, playerImg);
+	playerImg = LoadTexture("Assets/Diglet.png");
+	player = new PlayerSpring(App->physics, (float)500.0, (float)800.0, this, playerImg);
 
 	LOG("Loading player");
 	return true;
@@ -59,9 +58,30 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	player->Update();
+	//player->UpdatePlayer(posX, posY);
+
+	if (IsKeyPressed(KEY_W) && posY > 6.0 && canShoot)
+	{
+		player->body->body->SetLinearVelocity(b2Vec2{ 0.0 , -12.0 });
+		if (player->body->body->GetPosition().y <= 7.0)
+		{
+			canShoot = false;
+		}
+		t += 0.2;
+	}
+
+	if (player->body->body->GetPosition().y < 15.5)
+	{
+		posY = player->body->body->GetPosition().y;
+		player->UpdatePlayer(posX, posY);
+		posY += 0.5;
+		canShoot = false;
+	}
+
+	if (posY >= 15.5)
+	{
+		canShoot = true;
+	}
+
 	return UPDATE_CONTINUE;
 }
-
-
-

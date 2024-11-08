@@ -9,7 +9,7 @@
 
 class PhysBody;
 class PhysicEntity;
-class Player;
+class PlayerSpring;
 
 class ModulePlayer : public Module
 {
@@ -22,5 +22,12 @@ public:
 	bool CleanUp();
 
 	Texture2D playerImg;
-	Player* player = nullptr;
+	PlayerSpring* player = nullptr;
+
+	float posX = 10.0;
+	float posY = 15.7;
+	bool canShoot = true;
+	float v = 0.2;
+	float a = 0.2;
+	float t = 0.0;
 };
