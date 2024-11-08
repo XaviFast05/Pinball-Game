@@ -26,8 +26,9 @@ public:
 
 	float posX = 10.0;
 	float posY = 15.7;
+
 	bool canShoot = true;
-	float v = 0.2;
-	float a = 0.2;
+	bool isShooting = false;
+
 	float t = 0.0;
 };

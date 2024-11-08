@@ -73,12 +73,22 @@ update_status ModulePlayer::Update()
 
 	if (IsKeyPressed(KEY_W) && posY > 6.0 && canShoot)
 	{
-		player->body->body->SetLinearVelocity(b2Vec2{ 0.0 , -12.0 });
+		player->body->body->SetLinearVelocity(b2Vec2{ 0.0 , 1.0 });
 		if (player->body->body->GetPosition().y <= 7.0)
 		{
 			canShoot = false;
 		}
 		t += 0.2;
+	}
+
+	if (IsKeyReleased(KEY_W) && posY > 6.0 && canShoot)
+	{
+		isShooting = true;
+	}
+
+	if (isShooting)
+	{
+		player->body->body->SetLinearVelocity(b2Vec2{ 0.0 , -12.0 -t });
 	}
 
 	if (player->body->body->GetPosition().y < 15.5)
@@ -87,14 +97,13 @@ update_status ModulePlayer::Update()
 		player->UpdatePlayer(posX, posY);
 		posY += 0.5;
 		canShoot = false;
+		isShooting = false;
 	}
 
 	if (posY >= 15.5)
 	{
 		canShoot = true;
 	}
-
-	player->Update();
 
 	return UPDATE_CONTINUE;
 }
