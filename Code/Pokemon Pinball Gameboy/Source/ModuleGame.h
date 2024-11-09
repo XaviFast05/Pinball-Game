@@ -52,4 +52,5 @@ public:
 
 	vec2<int> ray;
 	bool ray_on;
+	Music backgroundMusic;
 };

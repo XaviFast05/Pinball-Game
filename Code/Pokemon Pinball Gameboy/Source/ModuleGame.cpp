@@ -6,6 +6,7 @@
 #include "ModulePhysics.h"
 #include "PhysicEntity.h"
 
+
 class Circle : public PhysicEntity
 {
 public:
@@ -495,6 +496,9 @@ bool ModuleGame::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+	backgroundMusic = LoadMusicStream("Assets/MapMode.ogg");
+	PlayMusicStream(backgroundMusic);
+
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	circle = LoadTexture("Assets/wheel.png"); 
@@ -541,6 +545,7 @@ bool ModuleGame::CleanUp()
 // Update: draw background
 update_status ModuleGame::Update()
 {
+	UpdateMusicStream(backgroundMusic);
 	float scaleX = (float)GetScreenWidth() / background.width;
 	float scaleY = (float)GetScreenHeight() / background.height;
 	DrawTextureEx(background, { 0, 0 }, 0.0f, fmax(scaleX, scaleY), WHITE);
