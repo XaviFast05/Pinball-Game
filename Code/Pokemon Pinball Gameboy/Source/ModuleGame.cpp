@@ -503,7 +503,7 @@ bool ModuleGame::Start()
 	voltorb = LoadTexture("Assets/Voltorb.png");
 	
 	bonus_fx = App->audio->LoadFx("Assets/bonus.wav");
-	entities.emplace_back(new Circle(App->physics, 500, 750, this, circle));
+	entities.emplace_back(new Circle(App->physics, 500, 550, this, circle));
 	entities.emplace_back(new Voltorb(App->physics, 200, 200, this, voltorb));
 	
 

@@ -11,8 +11,8 @@ class PlayerSpring : public PhysicEntity
 {
 public:
 
-	PlayerSpring(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture)
-		: PhysicEntity(physics->CreateRectangle(_x, _y, 37, 100), _listener)
+	PlayerSpring(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture, int w, int h)
+		: PhysicEntity(physics->CreateRectangle(_x, _y, w, h), _listener)
 		, texture(_texture)
 	{
 
@@ -52,8 +52,8 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	playerImg = LoadTexture("Assets/Diglet.png");
-	player = new PlayerSpring(App->physics, 500, 800, this, playerImg);
-
+	player = new PlayerSpring(App->physics, 500, 800, this, playerImg, 37, 50);
+	playerColision = new PlayerSpring(App->physics, 500, 800, this, playerImg, 37, 260);
 
 	LOG("Loading player");
 	return true;
@@ -69,40 +69,40 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	//player->UpdatePlayer(posX, posY);
-
-	if (IsKeyPressed(KEY_W) && posY > 6.0 && canShoot)
-	{
-		player->body->body->SetLinearVelocity(b2Vec2{ 0.0 , 1.0 });
-		if (player->body->body->GetPosition().y <= 7.0)
-		{
-			canShoot = false;
-		}
-		t += 0.2;
-	}
-
-	if (IsKeyReleased(KEY_W) && posY > 6.0 && canShoot)
+	if (IsKeyReleased(KEY_W) && canShoot)
 	{
 		isShooting = true;
+		canShoot = false;
+	}
+
+	if (!isShooting && !IsKeyDown(KEY_W))
+	{
+		player->UpdatePlayer(posX, posY);
+		
+		canShoot = true;
+		t = 0;
+	}
+
+	if (IsKeyPressed(KEY_W) && canShoot)
+	{
+		player->body->body->SetLinearVelocity(b2Vec2{ 0.0 , 1.0 });
+		playerColision->UpdatePlayer(-10, 13.0);
+	}
+
+	if (IsKeyPressedRepeat(KEY_W) && canShoot && t < 10)
+	{
+		t += 2;
+	}
+
+	if (player->body->body->GetPosition().y < 12.0 && isShooting)
+	{
+		isShooting = false;
+		playerColision->UpdatePlayer(posX, 13.0);
 	}
 
 	if (isShooting)
 	{
-		player->body->body->SetLinearVelocity(b2Vec2{ 0.0 , -12.0 -t });
-	}
-
-	if (player->body->body->GetPosition().y < 15.5)
-	{
-		posY = player->body->body->GetPosition().y;
-		player->UpdatePlayer(posX, posY);
-		posY += 0.5;
-		canShoot = false;
-		isShooting = false;
-	}
-
-	if (posY >= 15.5)
-	{
-		canShoot = true;
+		player->body->body->SetLinearVelocity(b2Vec2{ 0.0 ,  (float)(-12.0 - t) });
 	}
 
 	return UPDATE_CONTINUE;

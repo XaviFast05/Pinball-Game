@@ -23,9 +23,10 @@ public:
 
 	Texture2D playerImg;
 	PlayerSpring* player = nullptr;
+	PlayerSpring* playerColision = nullptr;
 
 	float posX = 10.0;
-	float posY = 15.7;
+	float posY = 12.0;
 
 	bool canShoot = true;
 	bool isShooting = false;
