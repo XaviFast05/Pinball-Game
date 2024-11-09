@@ -22,6 +22,7 @@ public:
 	bool CleanUp();
 
 	Texture2D playerImg;
+	Texture2D colisionImg;
 	PlayerSpring* player = nullptr;
 	PlayerSpring* playerColision = nullptr;
 

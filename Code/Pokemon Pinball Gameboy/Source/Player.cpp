@@ -52,8 +52,8 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	playerImg = LoadTexture("Assets/Diglet.png");
-	player = new PlayerSpring(App->physics, 500, 800, this, playerImg, 37, 50);
-	playerColision = new PlayerSpring(App->physics, 500, 800, this, playerImg, 37, 260);
+	player = new PlayerSpring(App->physics, 500, 800, this, playerImg, 41, 50);
+	playerColision = new PlayerSpring(App->physics, 500, 800, this, colisionImg, 37, 260);
 
 	LOG("Loading player");
 	return true;
@@ -104,6 +104,8 @@ update_status ModulePlayer::Update()
 	{
 		player->body->body->SetLinearVelocity(b2Vec2{ 0.0 ,  (float)(-12.0 - t) });
 	}
+
+	player->Update();
 
 	return UPDATE_CONTINUE;
 }

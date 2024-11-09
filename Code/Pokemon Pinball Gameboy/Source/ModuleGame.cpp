@@ -496,7 +496,8 @@ bool ModuleGame::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	backgroundMusic = LoadMusicStream("Assets/MapMode.ogg");
+	backgroundMusic = LoadMusicStream("Assets/Music/MapMode.ogg");
+	SetMusicVolume(backgroundMusic, 0.09f);
 	PlayMusicStream(backgroundMusic);
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
