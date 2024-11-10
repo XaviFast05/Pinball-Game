@@ -48,10 +48,13 @@ public:
 	bool CleanUp();
 
 	PhysBody* CreateCircle(int x, int y, int radius);
+	PhysBody* CreatePoint(int x, int y);
 	PhysBody* CreateStaticCircle(int x, int y, int radius);
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, const int* points, int size);
+
+	b2World* GetWorld() const { return world; }
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);

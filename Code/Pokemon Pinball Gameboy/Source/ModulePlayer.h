@@ -10,6 +10,8 @@
 class PhysBody;
 class PhysicEntity;
 class PlayerSpring;
+class PinballFlipperR;
+class PinballFlipperL;
 
 class ModulePlayer : public Module
 {
@@ -25,13 +27,15 @@ public:
 	Texture2D playerImg;
 	Texture2D colisionImg;
 	Texture2D playerBodyImg;
+	Texture2D Lflipper;
+	Texture2D Rflipper;
 
 	PlayerSpring* player = nullptr;
 	PlayerSpring* playerColision = nullptr;
 	PlayerSpring* playerBody = nullptr;
 
-	//PinballFlipper* leftFlipper = nullptr;
-	//PinballFlipper* rightFlipper = nullptr;
+	PinballFlipperL* leftFlipper = nullptr;
+	PinballFlipperR* rightFlipper = nullptr;
 
 	float posX = 10.0;
 	float posY = 12.0;

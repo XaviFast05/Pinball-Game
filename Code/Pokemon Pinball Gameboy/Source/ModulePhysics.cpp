@@ -102,6 +102,34 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 	return pbody;
 }
 
+PhysBody* ModulePhysics::CreatePoint(int x, int y)
+{
+
+	PhysBody* pbody = new PhysBody();
+
+
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_staticBody;
+	bodyDef.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(pbody);
+	b2Body* b = world->CreateBody(&bodyDef);
+
+	b2PolygonShape boxShape;
+	boxShape.SetAsBox(0, 0);
+
+	b2FixtureDef fixture;
+	fixture.shape = &boxShape;
+	fixture.density = 1.0f;
+	fixture.restitution = 0.0f;
+
+	b->CreateFixture(&fixture);
+
+	pbody->body = b;
+	pbody->width = pbody->height = METERS_TO_PIXELS(1);  
+
+	return pbody;
+}
+
 PhysBody* ModulePhysics::CreateStaticCircle(int x, int y, int radius)
 {
 	PhysBody* pbody = new PhysBody();
