@@ -22,7 +22,7 @@ public:
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 	void OnSensor(PhysBody* bodyA, PhysBody* bodyC);
-
+	void ScoreRefresh();
 public:
 
 	std::vector<PhysicEntity*> entities;
@@ -54,4 +54,8 @@ public:
 	vec2<int> ray;
 	bool ray_on;
 	Music backgroundMusic;
+	int score = 0;
+	int record = 0;
+	int pastScore = 0;
+	int lifes = 3;
 };

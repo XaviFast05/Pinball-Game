@@ -485,6 +485,7 @@ ModuleGame::ModuleGame(Application* app, bool start_enabled) : Module(app, start
 {
 	ray_on = false;
 	sensed = false;
+
 }
 
 ModuleGame::~ModuleGame()
@@ -515,7 +516,6 @@ bool ModuleGame::Start()
 	
 
 	sensor = App->physics->CreateRectangleSensor((SCREEN_WIDTH / 2) * SCREEN_SIZE, (SCREEN_HEIGHT * SCREEN_SIZE) + 30, (SCREEN_WIDTH * SCREEN_SIZE) - 200, 50);
-
 
 	//Creacion de las colisiones
 	entities.emplace_back(new Wall(App->physics, 0, 0, this, wallTexture));
@@ -552,6 +552,11 @@ update_status ModuleGame::Update()
 	float scaleX = (float)GetScreenWidth() / background.width;
 	float scaleY = (float)GetScreenHeight() / background.height;
 	DrawTextureEx(background, { 0, 0 }, 0.0f, fmax(scaleX, scaleY), WHITE);
+	DrawText(TextFormat("Score: %d", score), 10, 30, 30, RED);
+	DrawText(TextFormat("Last score: %d", pastScore), 10, 60, 30, RED);
+	DrawText(TextFormat("Record: %d", record), 10, 90, 30, RED);
+
+	DrawText(TextFormat("Lifes: %d", lifes), 10, 120, 30, RED);
 
 	Circle* Pokeball = dynamic_cast<Circle*>(entities[0]);
 
@@ -576,6 +581,7 @@ update_status ModuleGame::Update()
 			y = 550;
 			Pokeball->body->SetPhysicPosition(x, y);
 			Pokeball->body->body->SetLinearVelocity(b2Vec2{ 0.0, 0.5 });
+			lifes--;
 		}
 		if (IsKeyPressed(KEY_ONE))
 		{
@@ -586,6 +592,11 @@ update_status ModuleGame::Update()
 		}
 
 		// Actualiza la posición en el cuerpo físico
+	}
+
+	if (lifes == 0)
+	{
+		ScoreRefresh();
 	}
 
 	if (IsKeyPressed(KEY_THREE))
@@ -645,10 +656,32 @@ update_status ModuleGame::Update()
 
 void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	App->audio->PlayFx(bonus_fx);
+
+
+
+	Circle* Pokeball = dynamic_cast<Circle*>(bodyA->GetListener());
+	Voltorb* voltorb = dynamic_cast<Voltorb*>(bodyB->GetListener());
+
+	if (Pokeball != nullptr && voltorb != nullptr)
+	{
+		App->audio->PlayFx(bonus_fx);
+		score += 100;
+		LOG("Score: %d", score);  
+	}
 }
 
 void ModuleGame::OnSensor(PhysBody* bodyA, PhysBody* bodyC)
 {
 	App->audio->PlayFx(bonus_fx);
+}
+
+void ModuleGame::ScoreRefresh()
+{
+	pastScore = score;
+	if (score > record)
+	{
+		record = score;
+	}
+	score = 0;
+	lifes = 3;
 }
