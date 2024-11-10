@@ -23,8 +23,11 @@ public:
 
 	Texture2D playerImg;
 	Texture2D colisionImg;
+	Texture2D playerBodyImg;
+
 	PlayerSpring* player = nullptr;
 	PlayerSpring* playerColision = nullptr;
+	PlayerSpring* playerBody = nullptr;
 
 	float posX = 10.0;
 	float posY = 12.0;

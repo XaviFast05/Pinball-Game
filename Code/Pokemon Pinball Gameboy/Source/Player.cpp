@@ -51,11 +51,15 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::Start()
 {
+	LOG("Loading player");
 	playerImg = LoadTexture("Assets/Diglet.png");
+	playerBodyImg = LoadTexture("Assets/DigletBody.png");
+
 	player = new PlayerSpring(App->physics, 500, 800, this, playerImg, 41, 50);
+	playerBody = new PlayerSpring(App->physics, 500, 800, this, playerBodyImg, 41, 230);
 	playerColision = new PlayerSpring(App->physics, 500, 800, this, colisionImg, 37, 260);
 
-	LOG("Loading player");
+	playerBody->body->body->SetEnabled(false);
 	return true;
 }
 
@@ -69,6 +73,8 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
+	playerBody->UpdatePlayer(posX, player->body->body->GetPosition().y + 2.85);
+
 	if (IsKeyReleased(KEY_W) && canShoot)
 	{
 		isShooting = true;
@@ -85,24 +91,29 @@ update_status ModulePlayer::Update()
 
 	if (IsKeyPressed(KEY_W) && canShoot)
 	{
-		player->body->body->SetLinearVelocity(b2Vec2{ 0.0 , 1.0 });
+		player->body->body->SetLinearVelocity(b2Vec2{ 0.0 , 0.5 });
 		playerColision->UpdatePlayer(-10, 13.0);
 	}
 
-	if (IsKeyPressedRepeat(KEY_W) && canShoot && t < 10)
+	if (IsKeyPressedRepeat(KEY_W) && canShoot && t < 16)
 	{
 		t += 2;
 	}
 
 	if (player->body->body->GetPosition().y < 12.0 && isShooting)
 	{
-		isShooting = false;
 		playerColision->UpdatePlayer(posX, 13.0);
+	}
+
+	if (player->body->body->GetPosition().y < 12.0)
+	{
+		isShooting = false;
+		player->UpdatePlayer(posX, posY);
 	}
 
 	if (isShooting)
 	{
-		player->body->body->SetLinearVelocity(b2Vec2{ 0.0 ,  (float)(-12.0 - t) });
+		player->body->body->SetLinearVelocity(b2Vec2{ 0.0 ,  (float)(-12.2 - t) });
 	}
 
 	player->Update();
