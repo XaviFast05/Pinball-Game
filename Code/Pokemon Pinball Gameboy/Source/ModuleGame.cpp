@@ -656,18 +656,7 @@ update_status ModuleGame::Update()
 
 void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-
-
-
-	Circle* Pokeball = dynamic_cast<Circle*>(bodyA->GetListener());
-	Voltorb* voltorb = dynamic_cast<Voltorb*>(bodyB->GetListener());
-
-	if (Pokeball != nullptr && voltorb != nullptr)
-	{
-		App->audio->PlayFx(bonus_fx);
-		score += 100;
-		LOG("Score: %d", score);  
-	}
+	App->audio->PlayFx(bonus_fx);
 }
 
 void ModuleGame::OnSensor(PhysBody* bodyA, PhysBody* bodyC)
