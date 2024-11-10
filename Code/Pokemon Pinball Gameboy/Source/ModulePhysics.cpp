@@ -35,11 +35,11 @@ bool ModulePhysics::Start()
 	int y = (int)(SCREEN_HEIGHT / 1.5f);
 	int diameter = SCREEN_WIDTH / 2;
 
-	b2BodyDef body;
-	body.type = b2_staticBody;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	//b2BodyDef body;
+	//body.type = b2_staticBody;
+	//body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
-	b2Body* big_ball = world->CreateBody(&body);
+	//b2Body* big_ball = world->CreateBody(&body);
 
 	//b2CircleShape shape;
 	//shape.m_radius = PIXEL_TO_METERS(diameter) * 0.5f;
@@ -61,16 +61,14 @@ update_status ModulePhysics::PreUpdate()
 		{
 			b2BodyUserData data1 = c->GetFixtureA()->GetBody()->GetUserData();
 			b2BodyUserData data2 = c->GetFixtureA()->GetBody()->GetUserData();
-			b2BodyUserData data3 = c->GetFixtureA()->GetBody()->GetUserData();
 
 			PhysBody* pb1 = (PhysBody*)data1.pointer;
 			PhysBody* pb2 = (PhysBody*)data2.pointer;
-			PhysBody* pb3 = (PhysBody*)data3.pointer;
 
-			if(pb1 && pb2 && pb3 && pb1->listener)
+
+			if(pb1 && pb2 && pb1->listener)
 				pb1->listener->OnCollision(pb1, pb2);
 				//pb1->listener->OnSensor(pb1, pb3);
-				
 
 		}
 	}
@@ -84,6 +82,32 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 
 	b2BodyDef body;
 	body.type = b2_dynamicBody;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	body.userData.pointer = reinterpret_cast<uintptr_t>(pbody);
+
+	b2Body* b = world->CreateBody(&body);
+
+	b2CircleShape shape;
+	shape.m_radius = PIXEL_TO_METERS(radius);
+	b2FixtureDef fixture;
+	fixture.shape = &shape;
+	fixture.density = 1.0f;
+	fixture.restitution = 0.5f;
+
+	b->CreateFixture(&fixture);
+
+	pbody->body = b;
+	pbody->width = pbody->height = radius;
+
+	return pbody;
+}
+
+PhysBody* ModulePhysics::CreateStaticCircle(int x, int y, int radius)
+{
+	PhysBody* pbody = new PhysBody();
+
+	b2BodyDef body;
+	body.type = b2_staticBody;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 	body.userData.pointer = reinterpret_cast<uintptr_t>(pbody);
 

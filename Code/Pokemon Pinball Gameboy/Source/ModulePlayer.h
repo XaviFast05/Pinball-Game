@@ -15,6 +15,7 @@ class ModulePlayer : public Module
 {
 public:
 	ModulePlayer(Application* app, bool start_enabled = true);
+	
 	virtual ~ModulePlayer();
 
 	bool Start();
@@ -28,6 +29,9 @@ public:
 	PlayerSpring* player = nullptr;
 	PlayerSpring* playerColision = nullptr;
 	PlayerSpring* playerBody = nullptr;
+
+	//PinballFlipper* leftFlipper = nullptr;
+	//PinballFlipper* rightFlipper = nullptr;
 
 	float posX = 10.0;
 	float posY = 12.0;

@@ -32,6 +32,7 @@ public:
 	bool sensed;
 	bool isStopped = false;
 
+	//Voltorb* BodyVoltorb;
 
 	Texture2D circle;
 	Texture2D box;

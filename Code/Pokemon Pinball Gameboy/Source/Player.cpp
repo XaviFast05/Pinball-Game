@@ -45,6 +45,45 @@ public:
 	Texture2D texture;
 };
 
+class PinballFlipper : public PhysicEntity {
+public:
+	b2RevoluteJoint* joint; // Joint para la palanca
+
+	PinballFlipper(ModulePhysics* physics, int x, int y, int width, int height, Module* listener)
+		: PhysicEntity(physics->CreateRectangle(x, y, width, height), listener), joint(nullptr) {
+
+		// Crear el punto de anclaje de la palanca
+		//b2Body* anchor = physics->CreateStaticBody(x, y);
+
+		// Configurar el joint para la palanca
+		b2RevoluteJointDef jointDef;
+		//jointDef.bodyA = anchor;
+		jointDef.bodyB = body->body;
+		jointDef.localAnchorA.Set(0, 0);  // Ancla en el centro del punto de fijación
+		jointDef.localAnchorB.Set(0, 0);  // Ancla en el centro de la palanca
+		jointDef.enableLimit = true;
+		jointDef.lowerAngle = -30 * b2_pi / 180;  // Ángulo mínimo
+		jointDef.upperAngle = 30 * b2_pi / 180;   // Ángulo máximo
+		jointDef.maxMotorTorque = 1000.0f;
+		jointDef.motorSpeed = 0.0f;
+		jointDef.enableMotor = true;
+
+		//joint = (b2RevoluteJoint*)physics->world->CreateJoint(&jointDef);
+	}
+
+	void Activate() {
+		joint->SetMotorSpeed(-10.0f); // Velocidad para mover la palanca hacia arriba
+	}
+
+	void Deactivate() {
+		joint->SetMotorSpeed(10.0f); // Velocidad para devolver la palanca a su posición original
+	}
+
+	void Update() override {
+		// Lógica de actualización adicional si es necesario
+	}
+};
+
 ModulePlayer::~ModulePlayer()
 {}
 

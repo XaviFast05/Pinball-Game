@@ -39,7 +39,7 @@ class Voltorb : public PhysicEntity
 {
 public:
 	Voltorb(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture)
-		: PhysicEntity(physics->CreateCircle(_x, _y, 15), _listener)
+		: PhysicEntity(physics->CreateStaticCircle(_x, _y, 23), _listener)
 		, texture(_texture)
 	{
 
@@ -509,7 +509,9 @@ bool ModuleGame::Start()
 	
 	bonus_fx = App->audio->LoadFx("Assets/bonus.wav");
 	entities.emplace_back(new Circle(App->physics, 500, 550, this, circle));
-	entities.emplace_back(new Voltorb(App->physics, 200, 200, this, voltorb));
+	entities.emplace_back(new Voltorb(App->physics, 200, 250, this, voltorb));
+	entities.emplace_back(new Voltorb(App->physics, 273, 225, this, voltorb));
+	entities.emplace_back(new Voltorb(App->physics, 260, 310, this, voltorb));
 	
 
 	sensor = App->physics->CreateRectangleSensor((SCREEN_WIDTH / 2) * SCREEN_SIZE, (SCREEN_HEIGHT * SCREEN_SIZE) + 30, (SCREEN_WIDTH * SCREEN_SIZE) - 200, 50);
