@@ -568,7 +568,12 @@ update_status ModuleGame::Update()
 	if (Pokeball != nullptr) {
 		int x, y;
 		Pokeball->body->GetPhysicPosition(x, y); // Obtiene la posición actual
-
+		if (y > 820)
+		{
+			x = 500;
+			y = 550;
+			Pokeball->body->SetPhysicPosition(x, y);
+		}
 		if (IsKeyPressed(KEY_ONE))
 		{
 			x = GetMouseX();
