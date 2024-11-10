@@ -27,7 +27,7 @@ public:
 		float scale = 3;
 		DrawTexturePro(texture, Rectangle{ 0, 0, (float)texture.width, (float)texture.height },
 			Rectangle{ (float)x, (float)y, (float)texture.width * scale, (float)texture.height * scale },
-			Vector2{ (float)texture.width / 0.7f, (float)texture.height / 0.7f }, body->GetRotation() * RAD2DEG, WHITE);
+			Vector2{ (float)texture.width / 0.7f, (float)texture.height / 5.3f }, body->GetRotation() * RAD2DEG, WHITE);
 	}
 
 	void UpdatePlayer(float x, float y)
@@ -117,6 +117,7 @@ update_status ModulePlayer::Update()
 	}
 
 	player->Update();
+
 
 	return UPDATE_CONTINUE;
 }
