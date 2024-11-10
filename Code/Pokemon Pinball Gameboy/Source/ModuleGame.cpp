@@ -573,12 +573,14 @@ update_status ModuleGame::Update()
 			x = 500;
 			y = 550;
 			Pokeball->body->SetPhysicPosition(x, y);
+			Pokeball->body->body->SetLinearVelocity(b2Vec2{ 0.0, 0.5 });
 		}
 		if (IsKeyPressed(KEY_ONE))
 		{
 			x = GetMouseX();
 			y = GetMouseY();
 			Pokeball->body->SetPhysicPosition(x, y);
+			Pokeball->body->body->SetLinearVelocity(b2Vec2{ 0.0, 0.5 });
 		}
 
 		// Actualiza la posición en el cuerpo físico
