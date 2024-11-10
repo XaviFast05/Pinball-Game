@@ -481,6 +481,73 @@ private:
 	Texture2D texture;
 };
 
+class Wall10 : public PhysicEntity
+{
+public:
+	// Pivot 0, 0
+	static constexpr int wall_points10[12] = {
+			36 * SCREEN_SIZE, 209 * SCREEN_SIZE,
+			39 * SCREEN_SIZE, 209 * SCREEN_SIZE,
+			50 * SCREEN_SIZE, 232 * SCREEN_SIZE,
+			47 * SCREEN_SIZE, 234 * SCREEN_SIZE,
+			37 * SCREEN_SIZE, 227 * SCREEN_SIZE,
+			36 * SCREEN_SIZE, 224 * SCREEN_SIZE,
+
+
+	};
+
+	Wall10(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture)
+		: PhysicEntity(physics->CreateChain(0, 0, wall_points10, 12), _listener)
+		, texture(_texture)
+	{
+
+	}
+
+	void Update() override
+	{
+		int x, y;
+		body->GetPhysicPosition(x, y);
+		DrawTextureEx(texture, Vector2{ (float)x, (float)y }, body->GetRotation() * RAD2DEG, 1.0f, WHITE);
+	}
+
+private:
+	Texture2D texture;
+};
+
+class Wall11 : public PhysicEntity
+{
+public:
+	// Pivot 0, 0
+	static constexpr int wall_points11[12] = {
+			124 * SCREEN_SIZE, 223 * SCREEN_SIZE,
+			122 * SCREEN_SIZE, 227 * SCREEN_SIZE,
+			112 * SCREEN_SIZE, 235 * SCREEN_SIZE,
+			110 * SCREEN_SIZE, 232 * SCREEN_SIZE,
+			122 * SCREEN_SIZE, 209 * SCREEN_SIZE,
+			124 * SCREEN_SIZE, 209 * SCREEN_SIZE,
+
+
+	};
+
+	Wall11(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture)
+		: PhysicEntity(physics->CreateChain(0, 0, wall_points11, 12), _listener)
+		, texture(_texture)
+	{
+
+	}
+
+	void Update() override
+	{
+		int x, y;
+		body->GetPhysicPosition(x, y);
+		DrawTextureEx(texture, Vector2{ (float)x, (float)y }, body->GetRotation() * RAD2DEG, 1.0f, WHITE);
+	}
+
+private:
+	Texture2D texture;
+};
+
+
 ModuleGame::ModuleGame(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	ray_on = false;
@@ -527,6 +594,8 @@ bool ModuleGame::Start()
 	entities.emplace_back(new Wall7(App->physics, 0, 0, this, wallTexture7));
 	entities.emplace_back(new Wall8(App->physics, 0, 0, this, wallTexture8));
 	entities.emplace_back(new Wall9(App->physics, 0, 0, this, wallTexture9));
+	entities.emplace_back(new Wall10(App->physics, 0, 0, this, wallTexture10));
+	entities.emplace_back(new Wall11(App->physics, 0, 0, this, wallTexture11));
 
 
 	// Creacion de voltorbs

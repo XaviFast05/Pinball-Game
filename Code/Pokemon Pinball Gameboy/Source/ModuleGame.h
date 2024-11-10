@@ -48,6 +48,8 @@ public:
 	Texture2D wallTexture7;
 	Texture2D wallTexture8;
 	Texture2D wallTexture9;
+	Texture2D wallTexture10;
+	Texture2D wallTexture11;
 
 	uint32 bonus_fx;
 
