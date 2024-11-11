@@ -38,13 +38,10 @@ public:
 	Texture2D circle;
 	Texture2D box;
 	Texture2D voltorb;
-<<<<<<< HEAD
 	Texture2D square;
-=======
 	Texture2D diglet;
 	Texture2D DigDig;
 	Texture2D bellsprout;
->>>>>>> 13e301740ba838728f0754d0d476fbff7dae678f
 
 	Texture2D background;
 	Texture2D wallTexture;

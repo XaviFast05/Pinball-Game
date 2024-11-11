@@ -576,13 +576,12 @@ bool ModuleGame::Start()
 	box = LoadTexture("Assets/Diglet.png");
 	background = LoadTexture("Assets/Fondo.png");
 	voltorb = LoadTexture("Assets/Voltorb.png");
-<<<<<<< HEAD
 	square = LoadTexture("Assets/Square.png");
-=======
+
 	diglet = LoadTexture("Assets/Dig.png");
 	DigDig = LoadTexture("Assets/DigDig.png");
 	bellsprout = LoadTexture("Assets/Bellsprout.png");
->>>>>>> 13e301740ba838728f0754d0d476fbff7dae678f
+
 	
 	bonus_fx = App->audio->LoadFx("Assets/FX/snd_mtt_hit.wav");
 	hurt_fx = App->audio->LoadFx("Assets/FX/snd_break1_c.wav");
@@ -635,17 +634,13 @@ bool ModuleGame::CleanUp()
 // Update: draw background
 update_status ModuleGame::Update()
 {
+
 	UpdateMusicStream(backgroundMusic);
+
 	float scaleX = (float)GetScreenWidth() / background.width;
 	float scaleY = (float)GetScreenHeight() / background.height;
 	DrawTextureEx(background, { 0, 0 }, 0.0f, fmax(scaleX, scaleY), WHITE);
-	DrawText(TextFormat("Score: %d", score), 10, 30, 30, RED);
-	DrawText(TextFormat("Last score: %d", pastScore), 10, 60, 30, RED);
-	DrawText(TextFormat("Record: %d", record), 10, 90, 30, RED);
-
-	DrawText(TextFormat("Lifes: %d", lifes), 10, 120, 30, RED);
-
-
+	
 	if(IsKeyPressed(KEY_SPACE))
 	{
 		ray_on = !ray_on;
@@ -739,7 +734,20 @@ update_status ModuleGame::Update()
 			DrawLine((int)(ray.x + destination.x), (int)(ray.y + destination.y), (int)(ray.x + destination.x + normal.x * 25.0f), (int)(ray.y + destination.y + normal.y * 25.0f), Color{ 100, 255, 100, 255 });
 		}
 	}
+	
+	Rectangle source = { 0.0f, 0.0f, (float)square.width, (float)square.height };
+	Rectangle dest = { 0.0f, 0.0f, (float)GetScreenWidth(), (float)GetScreenHeight() };
+	Vector2 origin = { 0.0f, 0.0f };
 
+	DrawTexturePro(square, source, dest, origin, 0.0f, WHITE);
+
+	DrawText(TextFormat("Score: %d", score), 420, 38, 25, WHITE);
+	DrawText(TextFormat("Last \nscore: %d", pastScore), 420, 65, 25, BLACK);
+	DrawText(TextFormat("Record: %d", record), 420, 119, 25, BLACK);
+	DrawText(TextFormat("Lifes: %d", lifes), 420, 146, 25, BLACK);
+
+	return update_status::UPDATE_CONTINUE;
+	
 
 	return UPDATE_CONTINUE;
 }

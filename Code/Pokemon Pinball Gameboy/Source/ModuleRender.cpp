@@ -44,6 +44,8 @@ update_status ModuleRender::Update()
 // PostUpdate present buffer to screen
 update_status ModuleRender::PostUpdate()
 {
+
+
     // Draw everything in our batch!
     DrawFPS(10, 10);
 
