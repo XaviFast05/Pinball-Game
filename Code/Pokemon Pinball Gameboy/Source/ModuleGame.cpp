@@ -14,12 +14,13 @@ public:
 		: PhysicEntity(physics->CreateCircle(_x, _y, 15), _listener)
 		, texture(_texture)
 	{
-
+		
 	}
 
 	void Update() override
 	{
 		int x, y;
+		
 		body->GetPhysicPosition(x, y);
 		Vector2 position{ (float)x, (float)y };
 		float scale = 3.0f;
@@ -47,6 +48,7 @@ public:
 
 	void Update() override
 	{
+		body->isVoltorb = true;
 		int x, y;
 		body->GetPhysicPosition(x, y);
 		Vector2 position{ (float)x, (float)y };
@@ -725,7 +727,12 @@ update_status ModuleGame::Update()
 
 void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	App->audio->PlayFx(bonus_fx);
+
+
+	if (bodyA->isVoltorb||bodyB->isVoltorb) {
+		score += 100;
+		App->audio->PlayFx(bonus_fx);
+	}
 }
 
 

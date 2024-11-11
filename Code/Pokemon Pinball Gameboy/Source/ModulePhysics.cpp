@@ -465,11 +465,9 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 {
 	b2BodyUserData dataA = contact->GetFixtureA()->GetBody()->GetUserData();
 	b2BodyUserData dataB = contact->GetFixtureB()->GetBody()->GetUserData();
-	b2BodyUserData dataC = contact->GetFixtureB()->GetBody()->GetUserData();
 
 	PhysBody* physA = (PhysBody*)dataA.pointer;
 	PhysBody* physB = (PhysBody*)dataB.pointer;
-	PhysBody* physC = (PhysBody*)dataC.pointer;
 
 	if(physA && physA->listener != NULL)
 		physA->listener->OnCollision(physA, physB);
