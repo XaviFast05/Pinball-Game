@@ -7,26 +7,26 @@
 class PinballFlipperR : public PhysicEntity
 {
 public:
-	b2RevoluteJoint* joint; // Joint para la palanca
+	b2RevoluteJoint* joint; 
 
 	PinballFlipperR(ModulePhysics* physics, int _x, int _y, int width, int height, Texture2D _texture, Module* _listener)
 		: PhysicEntity(physics->CreateRectangle(_x, _y, width, height), _listener), joint(nullptr)
 		, texture(_texture)
 	{
 
-		// Crear el punto de anclaje de la palanca
+		
 		PhysBody* anchorPhysBody = physics->CreatePoint(_x, _y);
 		b2Body* anchor = anchorPhysBody->body;
 
-		// Configurar el joint para la palanca
+		
 		b2RevoluteJointDef jointDef;
 		jointDef.bodyA = anchor;
 		jointDef.bodyB = body->body;
-		jointDef.localAnchorA.Set(0, 0);  // Ancla en el centro del punto de fijación
-		jointDef.localAnchorB.Set(0.5f, 0);  // Ancla en el centro de la palanca
+		jointDef.localAnchorA.Set(0, 0);  
+		jointDef.localAnchorB.Set(0.5f, 0); 
 		jointDef.enableLimit = true;
-		jointDef.lowerAngle = -30 * b2_pi / 180;  // Ángulo mínimo
-		jointDef.upperAngle = 30 * b2_pi / 180;   // Ángulo máximo
+		jointDef.lowerAngle = -30 * b2_pi / 180;  
+		jointDef.upperAngle = 30 * b2_pi / 180;   
 		jointDef.maxMotorTorque = 1000.0f;
 		jointDef.motorSpeed = 0.0f;
 		jointDef.enableMotor = true;
@@ -35,11 +35,11 @@ public:
 	}
 
 	void Activate() {
-		joint->SetMotorSpeed(20.0f); // Velocidad para mover la palanca hacia arriba
+		joint->SetMotorSpeed(20.0f); 
 	}
 
 	void Deactivate() {
-		joint->SetMotorSpeed(-10.0f); // Velocidad para devolver la palanca a su posición original
+		joint->SetMotorSpeed(-10.0f); 
 	}
 
 	void Update() override {
@@ -56,26 +56,26 @@ public:
 class PinballFlipperL : public PhysicEntity
 {
 public:
-	b2RevoluteJoint* joint; // Joint para la palanca
+	b2RevoluteJoint* joint; 
 
 	PinballFlipperL(ModulePhysics* physics, int _x, int _y, int width, int height, Texture2D _texture, Module* _listener)
 		: PhysicEntity(physics->CreateRectangle(_x, _y, width, height), _listener), joint(nullptr)
 		, texture(_texture)
 	{
 
-		// Crear el punto de anclaje de la palanca
+		
 		PhysBody* anchorPhysBody = physics->CreatePoint(_x, _y);
 		b2Body* anchor = anchorPhysBody->body;
 
-		// Configurar el joint para la palanca
+		
 		b2RevoluteJointDef jointDef;
 		jointDef.bodyA = anchor;
 		jointDef.bodyB = body->body;
-		jointDef.localAnchorA.Set(0, 0);  // Ancla en el centro del punto de fijación
-		jointDef.localAnchorB.Set(-0.5f, 0);  // Ancla en el centro de la palanca
+		jointDef.localAnchorA.Set(0, 0);  
+		jointDef.localAnchorB.Set(-0.5f, 0);  
 		jointDef.enableLimit = true;
-		jointDef.lowerAngle = -30 * b2_pi / 180;  // Ángulo mínimo
-		jointDef.upperAngle = 30 * b2_pi / 180;   // Ángulo máximo
+		jointDef.lowerAngle = -30 * b2_pi / 180;  
+		jointDef.upperAngle = 30 * b2_pi / 180;  
 		jointDef.maxMotorTorque = 1000.0f;
 		jointDef.motorSpeed = 0.0f;
 		jointDef.enableMotor = true;
@@ -84,11 +84,11 @@ public:
 	}
 
 	void Activate() {
-		joint->SetMotorSpeed(-20.0f); // Velocidad para mover la palanca hacia arriba
+		joint->SetMotorSpeed(-20.0f); 
 	}
 
 	void Deactivate() {
-		joint->SetMotorSpeed(10.0f); // Velocidad para devolver la palanca a su posición original
+		joint->SetMotorSpeed(10.0f); 
 	}
 
 	void Update() override {
@@ -235,7 +235,7 @@ update_status ModulePlayer::Update()
 		rightFlipper->Deactivate();
 	}
 
-	// Actualizar las palancas
+
 	leftFlipper->Update();
 	rightFlipper->Update();
 

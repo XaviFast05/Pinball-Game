@@ -643,7 +643,7 @@ update_status ModuleGame::Update()
 
 	if (Pokeball != nullptr) {
 		int x, y;
-		Pokeball->body->GetPhysicPosition(x, y); // Obtiene la posición actual
+		Pokeball->body->GetPhysicPosition(x, y); 
 		if (y > 820)
 		{
 			x = 500;
@@ -660,7 +660,7 @@ update_status ModuleGame::Update()
 			Pokeball->body->body->SetLinearVelocity(b2Vec2{ 0.0, 0.5 });
 		}
 
-		// Actualiza la posición en el cuerpo físico
+		
 	}
 
 	if (lifes == 0)
