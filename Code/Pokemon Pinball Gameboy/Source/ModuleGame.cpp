@@ -565,6 +565,7 @@ bool ModuleGame::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+
 	backgroundMusic = LoadMusicStream("Assets/Music/MapMode.ogg");
 	SetMusicVolume(backgroundMusic, 0.09f);
 	PlayMusicStream(backgroundMusic);
@@ -575,6 +576,7 @@ bool ModuleGame::Start()
 	box = LoadTexture("Assets/Diglet.png");
 	background = LoadTexture("Assets/Fondo.png");
 	voltorb = LoadTexture("Assets/Voltorb.png");
+	square = LoadTexture("Assets/Square.png");
 	
 	bonus_fx = App->audio->LoadFx("Assets/bonus.wav");
 	entities.emplace_back(new Circle(App->physics, 500, 550, this, circle));

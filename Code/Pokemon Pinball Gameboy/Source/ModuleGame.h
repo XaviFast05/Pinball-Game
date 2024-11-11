@@ -37,6 +37,7 @@ public:
 	Texture2D circle;
 	Texture2D box;
 	Texture2D voltorb;
+	Texture2D square;
 
 	Texture2D background;
 	Texture2D wallTexture;
