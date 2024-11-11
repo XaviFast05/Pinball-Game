@@ -32,11 +32,15 @@ public:
 	bool sensed;
 	bool isStopped = false;
 
-	//Voltorb* BodyVoltorb;
 
+
+	//textures
 	Texture2D circle;
 	Texture2D box;
 	Texture2D voltorb;
+	Texture2D diglet;
+	Texture2D DigDig;
+	Texture2D bellsprout;
 
 	Texture2D background;
 	Texture2D wallTexture;
@@ -51,7 +55,10 @@ public:
 	Texture2D wallTexture10;
 	Texture2D wallTexture11;
 
+	//FXs
 	uint32 bonus_fx;
+	uint32 hurt_fx;
+	uint32 LifeUp_fx;
 
 	vec2<int> ray;
 	bool ray_on;
