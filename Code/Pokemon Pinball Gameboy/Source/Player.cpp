@@ -161,8 +161,8 @@ bool ModulePlayer::Start()
 	player = new PlayerSpring(App->physics, 500, 800, this, playerImg, 41, 50);
 	playerBody = new PlayerSpring(App->physics, 500, 800, this, playerBodyImg, 41, 230);
 	playerColision = new PlayerSpring(App->physics, 500, 800, this, colisionImg, 37, 260);
-	leftFlipper = new PinballFlipperL(App->physics, 173, 775, 70, 20, Lflipper, this);  
-	rightFlipper = new PinballFlipperR(App->physics, 310, 775, 70, 20, Rflipper, this); 
+	leftFlipper = new PinballFlipperL(App->physics, 172, 775, 65, 15, Lflipper, this);  
+	rightFlipper = new PinballFlipperR(App->physics, 311, 775, 65, 15, Rflipper, this); 
 
 	playerBody->body->body->SetEnabled(false);
 	return true;
