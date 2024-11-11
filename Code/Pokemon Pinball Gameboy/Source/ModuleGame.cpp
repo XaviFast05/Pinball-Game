@@ -728,10 +728,7 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	App->audio->PlayFx(bonus_fx);
 }
 
-void ModuleGame::OnSensor(PhysBody* bodyA, PhysBody* bodyC)
-{
-	App->audio->PlayFx(bonus_fx);
-}
+
 
 void ModuleGame::ScoreRefresh()
 {

@@ -76,7 +76,5 @@ public:
 	{
 	}
 
-	virtual void OnSensor(PhysBody* bodyA, PhysBody* bodyC)
-	{
-	}
+
 };
