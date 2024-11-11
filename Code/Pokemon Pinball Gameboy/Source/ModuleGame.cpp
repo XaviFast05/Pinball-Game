@@ -576,13 +576,24 @@ bool ModuleGame::Start()
 	box = LoadTexture("Assets/Diglet.png");
 	background = LoadTexture("Assets/Fondo.png");
 	voltorb = LoadTexture("Assets/Voltorb.png");
+<<<<<<< HEAD
 	square = LoadTexture("Assets/Square.png");
+=======
+	diglet = LoadTexture("Assets/Dig.png");
+	DigDig = LoadTexture("Assets/DigDig.png");
+	bellsprout = LoadTexture("Assets/Bellsprout.png");
+>>>>>>> 13e301740ba838728f0754d0d476fbff7dae678f
 	
-	bonus_fx = App->audio->LoadFx("Assets/bonus.wav");
+	bonus_fx = App->audio->LoadFx("Assets/FX/snd_mtt_hit.wav");
+	hurt_fx = App->audio->LoadFx("Assets/FX/snd_break1_c.wav");
+	LifeUp_fx = App->audio->LoadFx("Assets/FX/snd_levelup.wav");
+
+	//Creacion pokeball
 	entities.emplace_back(new Circle(App->physics, 500, 550, this, circle));
-	entities.emplace_back(new Voltorb(App->physics, 200, 250, this, voltorb));
-	entities.emplace_back(new Voltorb(App->physics, 273, 225, this, voltorb));
-	entities.emplace_back(new Voltorb(App->physics, 260, 310, this, voltorb));
+	Pokeball = dynamic_cast<Circle*>(entities[0]);
+	Pokeball->body->body->SetFixedRotation(0);
+	Pokeball->body->isBall = true;
+
 	
 
 	sensor = App->physics->CreateRectangleSensor((SCREEN_WIDTH / 2) * SCREEN_SIZE, (SCREEN_HEIGHT * SCREEN_SIZE) + 30, (SCREEN_WIDTH * SCREEN_SIZE) - 200, 50);
@@ -601,10 +612,13 @@ bool ModuleGame::Start()
 	entities.emplace_back(new Wall11(App->physics, 0, 0, this, wallTexture11));
 
 
-	// Creacion de voltorbs
-	Pokeball = dynamic_cast<Circle*>(entities[0]);
-	Pokeball->body->body->SetFixedRotation(0);
-	Pokeball->body->isBall = true;
+	// Creacion de Pokemons
+	entities.emplace_back(new Voltorb(App->physics, 200, 250, this, voltorb));
+	entities.emplace_back(new Voltorb(App->physics, 273, 225, this, voltorb));
+	entities.emplace_back(new Voltorb(App->physics, 260, 310, this, voltorb));
+	entities.emplace_back(new Voltorb(App->physics, 96, 546, this, diglet));
+	entities.emplace_back(new Voltorb(App->physics, 384, 546, this, DigDig));
+	entities.emplace_back(new Voltorb(App->physics, 371, 273, this, bellsprout));
 
 	return ret;
 }
@@ -639,11 +653,6 @@ update_status ModuleGame::Update()
 		ray.y = GetMouseY();
 	}
 
-	if(IsKeyPressed(KEY_TWO))
-	{
-		entities.emplace_back(new Box(App->physics, GetMouseX(), GetMouseY(), this, box));
-	}
-
 	if (Pokeball != nullptr) {
 		int x, y;
 		Pokeball->body->GetPhysicPosition(x, y); 
@@ -655,6 +664,7 @@ update_status ModuleGame::Update()
 			Pokeball->body->body->SetLinearVelocity(b2Vec2{ 0.0, 0.5 });
 			Pokeball->body->body->SetAngularVelocity(0);
 			lifes--;
+			App->audio->PlayFx(hurt_fx);
 		}
 		if (IsKeyPressed(KEY_ONE))
 		{
@@ -666,14 +676,21 @@ update_status ModuleGame::Update()
 		}
 	}
 
+	if (IsKeyPressed(KEY_THREE))
+	{
+		score += 100;
+	}
+
 	if (lifes == 0)
 	{
 		ScoreRefresh();
 	}
 
-	if (IsKeyPressed(KEY_THREE))
+	if (score == 5000)
 	{
-		entities.emplace_back(new Circle(App->physics, GetMouseX(), GetMouseY(), this, circle));
+		lifes++;
+		score++;
+		App->audio->PlayFx(LifeUp_fx);
 	}
 
 	// Prepare for raycast ------------------------------------------------------
@@ -731,7 +748,7 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	if (bodyA->isVoltorb||bodyB->isVoltorb) 
 	{
-		score += 100;
+		score += 50;
 		App->audio->PlayFx(bonus_fx);
 	}	
 	if (bodyA->isPlayer && bodyB->isBall)
