@@ -158,6 +158,8 @@ bool ModulePlayer::Start()
 	Lflipper = LoadTexture("Assets/Palanca_L.png");
 	Rflipper = LoadTexture("Assets/Palanca_R.png");
 
+	FlipperUp_fx = App->audio->LoadFx("Assets/FX/mus_sfx_spellcast.wav");
+	FlipperDown_fx = App->audio->LoadFx("Assets/FX/mus_sfx_star.wav");
 	
 	player = new PlayerSpring(App->physics, 500, 800, this, playerImg, 41, 48);
 	playerBody = new PlayerSpring(App->physics, 500, 800, this, playerBodyImg, 41, 230);
@@ -229,16 +231,38 @@ update_status ModulePlayer::Update()
 
 	if (IsKeyDown(KEY_A)) {
 		leftFlipper->Activate();
+		if (IsKeyPressed(KEY_A))
+		{
+			App->audio->PlayFx(FlipperUp_fx);
+			flipperDownL = true;
+		}
+		
 	}
 	else {
 		leftFlipper->Deactivate();
+		if (flipperDownL == true)
+		{
+			App->audio->PlayFx(FlipperDown_fx);
+			flipperDownL = false;
+		}
 	}
 
 	if (IsKeyDown(KEY_D)) {
 		rightFlipper->Activate();
+		if (IsKeyPressed(KEY_D))
+		{
+			App->audio->PlayFx(FlipperUp_fx);
+			flipperDownR = true;
+		}
 	}
 	else {
 		rightFlipper->Deactivate();
+		if (flipperDownR == true)
+		{
+			App->audio->PlayFx(FlipperDown_fx);
+			flipperDownR = false;
+		}
+		
 	}
 
 	leftFlipper->Update();

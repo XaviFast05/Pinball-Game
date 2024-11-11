@@ -37,11 +37,16 @@ public:
 	PinballFlipperL* leftFlipper = nullptr;
 	PinballFlipperR* rightFlipper = nullptr;
 
+	uint32 FlipperUp_fx;
+	uint32 FlipperDown_fx;
+
 	float posX = 10.0;
 	float posY = 12.0;
 
 	bool canShoot = true;
 	bool isShooting = false;
+	bool flipperDownL = false;
+	bool flipperDownR = false;
 
 	float t = 0.0;
 };
