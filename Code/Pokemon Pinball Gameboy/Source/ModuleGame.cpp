@@ -554,7 +554,6 @@ ModuleGame::ModuleGame(Application* app, bool start_enabled) : Module(app, start
 {
 	ray_on = false;
 	sensed = false;
-
 }
 
 ModuleGame::~ModuleGame()
@@ -601,8 +600,9 @@ bool ModuleGame::Start()
 
 
 	// Creacion de voltorbs
-
-
+	Pokeball = dynamic_cast<Circle*>(entities[0]);
+	Pokeball->body->body->SetFixedRotation(0);
+	Pokeball->body->isBall = true;
 
 	return ret;
 }
@@ -629,7 +629,6 @@ update_status ModuleGame::Update()
 
 	DrawText(TextFormat("Lifes: %d", lifes), 10, 120, 30, RED);
 
-	Circle* Pokeball = dynamic_cast<Circle*>(entities[0]);
 
 	if(IsKeyPressed(KEY_SPACE))
 	{
@@ -652,6 +651,7 @@ update_status ModuleGame::Update()
 			y = 550;
 			Pokeball->body->SetPhysicPosition(x, y);
 			Pokeball->body->body->SetLinearVelocity(b2Vec2{ 0.0, 0.5 });
+			Pokeball->body->body->SetAngularVelocity(0);
 			lifes--;
 		}
 		if (IsKeyPressed(KEY_ONE))
@@ -660,9 +660,8 @@ update_status ModuleGame::Update()
 			y = GetMouseY();
 			Pokeball->body->SetPhysicPosition(x, y);
 			Pokeball->body->body->SetLinearVelocity(b2Vec2{ 0.0, 0.5 });
+			Pokeball->body->body->SetAngularVelocity(0);
 		}
-
-		
 	}
 
 	if (lifes == 0)
@@ -722,20 +721,26 @@ update_status ModuleGame::Update()
 		}
 	}
 
+
 	return UPDATE_CONTINUE;
 }
 
 void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-
-
-	if (bodyA->isVoltorb||bodyB->isVoltorb) {
+	if (bodyA->isVoltorb||bodyB->isVoltorb) 
+	{
 		score += 100;
 		App->audio->PlayFx(bonus_fx);
+	}	
+	if (bodyA->isPlayer && bodyB->isBall)
+	{
+		bodyA->onSpring = true;
+	}	
+	if (bodyA->isBall && bodyB->isPlayer)
+	{
+		bodyB->onSpring = true;
 	}
 }
-
-
 
 void ModuleGame::ScoreRefresh()
 {

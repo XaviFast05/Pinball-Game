@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModulePlayer.h"
 #include "ModulePhysics.h"
+#include "ModuleGame.h"
 #include "PhysicEntity.h"
 
 class PinballFlipperR : public PhysicEntity
@@ -158,13 +159,14 @@ bool ModulePlayer::Start()
 	Rflipper = LoadTexture("Assets/Palanca_R.png");
 
 	
-	player = new PlayerSpring(App->physics, 500, 800, this, playerImg, 41, 50);
+	player = new PlayerSpring(App->physics, 500, 800, this, playerImg, 41, 48);
 	playerBody = new PlayerSpring(App->physics, 500, 800, this, playerBodyImg, 41, 230);
-	playerColision = new PlayerSpring(App->physics, 500, 800, this, colisionImg, 37, 260);
+	playerColision = new PlayerSpring(App->physics, 500, 800, this, colisionImg, 37, 261);
 	leftFlipper = new PinballFlipperL(App->physics, 172, 775, 65, 15, Lflipper, this);  
 	rightFlipper = new PinballFlipperR(App->physics, 311, 775, 65, 15, Rflipper, this); 
 
 	playerBody->body->body->SetEnabled(false);
+	playerColision->body->isPlayer = true;
 	return true;
 }
 
@@ -179,9 +181,11 @@ bool ModulePlayer::CleanUp()
 update_status ModulePlayer::Update()
 {
 	playerBody->UpdatePlayer(posX, player->body->body->GetPosition().y + 2.85);
+	playerColision->body->body->SetLinearVelocity(b2Vec2{ 0, 0.1 });
 
-	if (IsKeyReleased(KEY_W) && canShoot)
+	if (IsKeyReleased(KEY_W) && playerColision->body->onSpring == true && player->body->body->GetPosition().y > 12.0)
 	{
+		playerColision->body->onSpring = false;
 		isShooting = true;
 		canShoot = false;
 	}
@@ -189,13 +193,15 @@ update_status ModulePlayer::Update()
 	if (!isShooting && !IsKeyDown(KEY_W))
 	{
 		player->UpdatePlayer(posX, posY);
+	    player->body->body->SetEnabled(false);
 		
 		canShoot = true;
 		t = 0;
 	}
 
-	if (IsKeyPressed(KEY_W) && canShoot)
+	if (IsKeyPressed(KEY_W) && playerColision->body->onSpring == true)
 	{
+	    player->body->body->SetEnabled(true);
 		player->body->body->SetLinearVelocity(b2Vec2{ 0.0 , 0.5 });
 		playerColision->UpdatePlayer(-10, 13.0);
 	}
@@ -207,7 +213,7 @@ update_status ModulePlayer::Update()
 
 	if (player->body->body->GetPosition().y < 12.0 && isShooting)
 	{
-		playerColision->UpdatePlayer(posX, 13.0);
+		playerColision->UpdatePlayer(posX, 14.0);
 	}
 
 	if (player->body->body->GetPosition().y < 12.0)
@@ -234,7 +240,6 @@ update_status ModulePlayer::Update()
 	else {
 		rightFlipper->Deactivate();
 	}
-
 
 	leftFlipper->Update();
 	rightFlipper->Update();

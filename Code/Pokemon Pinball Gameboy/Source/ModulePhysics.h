@@ -27,7 +27,11 @@ public:
 	float GetRotation() const;
 	bool Contains(int x, int y) const;
 	int RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& normal_y) const;
-	bool isVoltorb;
+
+	bool isVoltorb = false;
+	bool isBall = false;
+	bool isPlayer = false;
+	bool onSpring = false;
 public:
 	int width, height;
 	b2Body* body;

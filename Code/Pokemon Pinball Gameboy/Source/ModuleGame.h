@@ -9,6 +9,7 @@
 #include <vector>
 
 class PhysBody;
+class Circle;
 class PhysicEntity;
 
 class ModuleGame : public Module
@@ -59,4 +60,6 @@ public:
 	int record = 0;
 	int pastScore = 0;
 	int lifes = 3;
+
+	Circle* Pokeball;
 };
