@@ -16,6 +16,6 @@ AD - Move Flippers
 
 ## DEBUG MODE
 F1 - Collisions  
-1 - Spawn Ball in the position of the cursor
-2 - Die
-3 - Add points to Score  
+1 - Spawn Ball in the position of the cursor  
+2 - Die  
+3 - Add points to Score   
