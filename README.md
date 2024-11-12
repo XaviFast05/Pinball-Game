@@ -1,10 +1,12 @@
 # Pinball-Game
 ## Members:
+Recreation of Pokemon Pinball for the Game Boy  
+
 - Xavier Chaparro  
 - Isaac Ramirez  
 - Clara Rodriguez  
 - Marti Mach  
-Recreation of Pokemon Pinball for the Game Boy  
+
 Release URL: 
 
 ## CONTROLS
