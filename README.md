@@ -6,7 +6,7 @@ This recreation includes:
 - Flippers and launcher for the ball
 - Score system, with high score and last score
 - Life system, which resets the game once you lost all the lifes
-- collision system
+- Collision system with all the pokemons
 - Debug features    
 
 Repository URL: https://github.com/XaviFast05/Pinball-Game
