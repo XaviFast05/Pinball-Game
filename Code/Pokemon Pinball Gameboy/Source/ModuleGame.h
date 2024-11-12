@@ -31,7 +31,7 @@ public:
 	
 	bool sensed;
 	bool isStopped = false;
-
+	bool lifeEarned = false;
 
 
 	//textures

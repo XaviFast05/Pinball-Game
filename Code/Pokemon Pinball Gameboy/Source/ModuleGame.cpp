@@ -689,11 +689,11 @@ update_status ModuleGame::Update()
 		ScoreRefresh();
 	}
 
-	if (score == 5000)
+	if (score == 5000 && lifeEarned == false)
 	{
 		lifes++;
-		score++;
 		App->audio->PlayFx(LifeUp_fx);
+		lifeEarned = true;
 	}
 
 	// Prepare for raycast ------------------------------------------------------
@@ -786,4 +786,5 @@ void ModuleGame::ScoreRefresh()
 	}
 	score = 0;
 	lifes = 3;
+	lifeEarned = false;
 }
