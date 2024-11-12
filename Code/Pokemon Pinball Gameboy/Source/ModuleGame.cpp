@@ -671,6 +671,14 @@ update_status ModuleGame::Update()
 		}
 	}
 
+	if (IsKeyPressed(KEY_TWO))
+	{
+		int x, y;
+		x = -100;
+		y = 1000;
+		Pokeball->body->SetPhysicPosition(x, y);
+	}
+
 	if (IsKeyPressed(KEY_THREE))
 	{
 		score += 100;
