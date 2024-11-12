@@ -1,4 +1,9 @@
-# Pinball-Game
+## Pinball-Game
+# Members:
+- Xavier Chaparro
+- Isaac Ramirez
+- Clara Rodriguez
+- Marti Mach
 Recreation of Pokemon Pinball for the Game Boy
 Release URL: 
 
@@ -10,8 +15,3 @@ AD - Move Levers
 F1 - Collisions
 1 - Spawn Ball
 3 - Add points to Score
-
-# ASSETS
-Sprites:
-
-
